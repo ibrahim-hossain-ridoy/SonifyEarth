@@ -1,0 +1,35 @@
+{
+  "name": "bangladesh_rain_data.json",
+  "expected_shape": {
+    "locations": [
+      {
+        "city": "Dhaka",
+        "lat": 23.8103,
+        "lon": 90.4125,
+        "years": [
+          {
+            "year": 2005,
+            "total_mm": 1234.5,
+            "mean_mm_day": 3.38,
+            "max_mm_day": 65.2
+          }
+        ]
+      }
+    ]
+  },
+  "required_fields": [
+    "city",
+    "lat",
+    "lon",
+    "years.year",
+    "years.total_mm"
+  ],
+  "optional_fields": [
+    "years.mean_mm_day",
+    "years.max_mm_day",
+    "years.heavy_days",
+    "years.very_heavy_days",
+    "years.peak_date"
+  ],
+  "adapter_note": "When the real city JSON is placed in data/, the same compare/delta/anomaly UI can use city-year records. City audio WAV names can be wired from audio/city/."
+}

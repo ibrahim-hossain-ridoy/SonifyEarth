@@ -1,0 +1,63 @@
+{
+  "project": "SonifyEarth: Hear the Change",
+  "data_purpose": "Bangladesh rainfall MVP for 1 October 2026 pre-screening",
+  "source_provider": "NASA GPM / GES DISC via Giovanni",
+  "collection": "GPM_3IMERGDE_07",
+  "product": "GPM IMERG Early Precipitation L3 1 day 0.1 degree x 0.1 degree V07",
+  "variable": "Daily mean precipitation rate (combined microwave-IR) estimate - Early Run",
+  "unit": "mm/day",
+  "time_start": "2005-01-01",
+  "time_end": "2026-09-24",
+  "days": 7942,
+  "spatial_basis": {
+    "type": "Giovanni area-averaged bounding box",
+    "user_bbox": "88E, 20.5N, 92.7E, 26.7N",
+    "data_bbox": "88.05E, 20.55N, 92.65E, 26.65N",
+    "warning": "This is a bounding box average, not an exact Bangladesh national-boundary mask."
+  },
+  "data_quality": {
+    "missing_dates": [],
+    "missing_date_count": 0,
+    "duplicate_date_count": 0,
+    "missing_value_count": 0
+  },
+  "comparison_baseline": {
+    "type": "SonifyEarth project baseline",
+    "period": "2005-2025",
+    "method": "same month-day baseline across available years",
+    "warning": "This is not the official NASA 2001-2022 IMERG climatology."
+  },
+  "official_nasa_climatology_for_upgrade": {
+    "period": "2001-2022",
+    "source": "NASA IMERG V07B Daily Climatology",
+    "url": "https://gpm.nasa.gov/data/imerg/precipitation-climatology"
+  },
+  "risk_reference": {
+    "provider": "Bangladesh Meteorological Department (BMD)",
+    "daily_categories": {
+      "light": "1-10 mm/day",
+      "moderate": "11-22 mm/day",
+      "moderately_heavy": "23-43 mm/day",
+      "heavy": "44-88 mm/day",
+      "very_heavy": ">88 mm/day"
+    },
+    "warning": "These categories are meteorological reference classes, not a universal disaster-probability score; applying them to an area-averaged satellite value should be labeled as reference context."
+  },
+  "rainfall_risk_metrics": [
+    "daily rainfall amount",
+    "3-day accumulation",
+    "7-day accumulation",
+    "30-day accumulation",
+    "project anomaly in mm/day",
+    "standardized anomaly z-score",
+    "same-date historical percentile",
+    "previous-year same-date delta"
+  ],
+  "audio_mapping": {
+    "scientific_mode": "rainfall amount -> frequency",
+    "input_range_mm_day": "0-100",
+    "frequency_range_hz": "220-880",
+    "formula": "f = 220 * (880/220)^u; u = clip(rain_mm_day/100,0,1)",
+    "meaning": "Equal frequency corresponds to equal mapped rainfall amount under the fixed mapping; it does not mean the physical rainfall itself produces that pitch."
+  }
+}

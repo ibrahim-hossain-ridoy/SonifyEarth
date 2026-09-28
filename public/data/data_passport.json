@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0.0",
+  "package": "SonifyEarth_Rainfall_MVP",
+  "national_dataset": {
+    "dataset": "GPM IMERG Early (Daily)",
+    "variable": "Precipitation",
+    "unit": "mm/day",
+    "region": "Bangladesh (88E–92.7E, 20.5N–26.7N)",
+    "source": "NASA GES DISC / Giovanni",
+    "source_url": "https://giovanni.gsfc.nasa.gov/giovanni/",
+    "temporal_coverage": "2005-01-01 through 2026-09-24",
+    "annual_values": "Daily area-averaged precipitation values aggregated by arithmetic mean for each calendar year.",
+    "2026_note": "2026 is partial year through 2026-09-24."
+  },
+  "city_dataset": {
+    "file": "bangladesh_rain_data.json",
+    "cities": ["Dhaka", "Chittagong", "Sylhet", "Rajshahi", "Khulna", "Barisal", "Rangpur", "Mymensingh"],
+    "temporal_coverage": "2005 through 2025",
+    "unit": "mm/day",
+    "provenance": "City-level values supplied in package input. Original source metadata was not supplied; do not label this dataset NASA-derived without separate provenance."
+  },
+  "frequency_mapping": {
+    "rule": "Higher rainfall = higher mapped fundamental pitch.",
+    "formula_hz": "220 + (rainfall_mm_day / 40) * 660",
+    "min_rainfall_mm_day": 0,
+    "max_rainfall_mm_day": 40,
+    "min_hz": 220,
+    "max_hz": 880,
+    "mapping_type": "linear"
+  },
+  "audio_assets": {
+    "national": {
+      "folder": "audio/national",
+      "file_pattern": "rainfall_BD_YYYY.wav",
+      "count": 22,
+      "coverage": "2005–2026",
+      "duration_seconds": 8,
+      "format": "Mono, 48000 Hz, 16-bit PCM WAV",
+      "synthesis": "Organic rain: granular impact bursts, 800–3000 Hz randomized impact resonances, short noise attacks, rainfall-scaled pink/band-pass ambience, and mapped-fundamental decays."
+    },
+    "city": {
+      "folder": "audio/city",
+      "file_pattern": "rainfall_city_CityName.wav",
+      "count": 8,
+      "coverage": "One file per city, synthesized from each 2005–2025 city average.",
+      "duration_seconds": 5,
+      "format": "Mono, 48000 Hz, 16-bit PCM WAV",
+      "synthesis": "Same organic rain engine and fundamental mapping as national assets."
+    }
+  },
+  "interpretation_limits": [
+    "Audio conveys comparative rainfall data. It is not a weather forecast or emergency-warning system.",
+    "Historical context records describe past events. Do not infer event causality from annual averages alone."
+  ]
+}

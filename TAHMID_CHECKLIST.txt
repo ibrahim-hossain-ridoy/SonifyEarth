@@ -1,0 +1,11 @@
+TAHMID ASSEMBLY CHECKLIST
+
+1. Copy demo/index.html logic into the existing SonifyEarth UI.
+2. Wire year selectors to data/year_profiles.json.
+3. Use src/sonifyearth_rainfall.js for Compare/Delta/Risk/Anomaly logic.
+4. Put national WAVs under audio/national/.
+5. Add Data Passport panel using data/data_passport.json.
+6. Add city JSON/WAV files when the team supplies them.
+7. Keep 2026 labelled YTD / available-to-date.
+8. Keep BMD labels as reference context, not predictions.
+9. Run final desktop + mobile test.

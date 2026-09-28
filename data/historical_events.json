@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Display-only historical flood and landslide context. Not a prediction model and not derived from package annual means.",
+  "events": [
+    {
+      "id": "bd-2007-floods",
+      "year": 2007,
+      "label": "Bangladesh monsoon floods",
+      "hazards": ["flood"],
+      "context": "Flooding struck in July/August and again in September. World Bank reporting describes more than 13 million people affected across 46 districts and widespread damage to agriculture, infrastructure, housing, livestock and fisheries.",
+      "sources": [
+        {
+          "publisher": "World Bank",
+          "title": "Bangladesh Flood Restoration and Recovery Assistance Program",
+          "url": "https://documents1.worldbank.org/curated/en/970691468206344752/pdf/417580BD.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bd-2019-monsoon-floods-landslides",
+      "year": 2019,
+      "label": "Monsoon floods and landslides",
+      "hazards": ["flood", "landslide"],
+      "context": "WHO reported heavy monsoon rain, flooding and landslides affecting northern and eastern areas. Its 16 July update reported over 270,000 people affected and noted elevated landslide risk in hilly parts of Chattogram and Sylhet divisions.",
+      "sources": [
+        {
+          "publisher": "World Health Organization Bangladesh",
+          "title": "WHO supports relief efforts in flood affected areas",
+          "url": "https://www.who.int/bangladesh/news/detail/16-07-2019-who-supports-relief-efforts-in-flood-affected-areas"
+        }
+      ]
+    },
+    {
+      "id": "bd-2024-eastern-flash-floods",
+      "year": 2024,
+      "label": "Eastern flash floods",
+      "hazards": ["flood", "landslide risk"],
+      "context": "Persistent heavy monsoon rain caused flash flooding in northeastern and southeastern districts. UN Bangladesh reported roughly 4.94 million people affected from 21–25 August; flood and slope-risk context should be presented as historical, not as a live warning.",
+      "sources": [
+        {
+          "publisher": "United Nations in Bangladesh",
+          "title": "Bangladesh: Eastern Flash Flood Situation Report No. 01",
+          "url": "https://bangladesh.un.org/en/277301-bangladesh-eastern-flash-flood-situation-report-no-01"
+        },
+        {
+          "publisher": "UNICEF Bangladesh",
+          "title": "Bangladesh Humanitarian Situation Report: Sylhet Floods",
+          "url": "https://www.unicef.org/media/158566/file/Bangladesh-Humanitarian-SitRep-Sylhet-Floods-25-June-2024.pdf"
+        }
+      ]
+    }
+  ]
+}

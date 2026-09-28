@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0.0",
+  "name": "BMD rainfall intensity display rules",
+  "input": {
+    "field": "peakDailyRainMm",
+    "unit": "mm/day",
+    "meaning": "Peak daily rainfall supplied by caller. Do not use annual average as this input."
+  },
+  "classes": [
+    {
+      "id": "light",
+      "label": "Light",
+      "minMm": 0,
+      "minInclusive": true,
+      "maxMm": 44,
+      "maxInclusive": true,
+      "floodLandslideText": "Light rainfall band. Local waterlogging can still occur where drainage is poor."
+    },
+    {
+      "id": "heavy",
+      "label": "Heavy",
+      "minMm": 44,
+      "minInclusive": false,
+      "maxMm": 88,
+      "maxInclusive": true,
+      "floodLandslideText": "Heavy rainfall band. Monitor local flood exposure and drainage; slope areas may need extra caution."
+    },
+    {
+      "id": "very_heavy",
+      "label": "Very Heavy",
+      "minMm": 88,
+      "minInclusive": false,
+      "maxMm": null,
+      "maxInclusive": false,
+      "floodLandslideText": "Very heavy rainfall band. Elevated flood and landslide concern, especially near rivers, low-lying areas and unstable slopes."
+    }
+  ],
+  "boundary_summary": "44 mm or less = Light. More than 44 mm through 88 mm = Heavy. More than 88 mm = Very Heavy.",
+  "disclaimer": "Display aid only. Not official warning, forecast, evacuation guidance or substitute for Bangladesh Meteorological Department alerts."
+}

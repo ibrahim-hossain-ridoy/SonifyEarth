@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SonifyEarth: Hear the Change | Rainfall MVP</title>
+<style>
+:root{--bg:#0b1020;--panel:#111a31;--line:#2b385e;--text:#eef3ff;--muted:#a8b4d4;--accent:#7dd3fc;--warn:#fbbf24;--danger:#fb7185;--good:#86efac}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:linear-gradient(180deg,#080d1a,#0d1430);color:var(--text);line-height:1.45}
+main{max-width:1120px;margin:0 auto;padding:32px 20px 64px}.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}h1{font-size:36px;line-height:1.1;margin:7px 0 10px}h2{font-size:22px;margin:0 0 14px}.sub{color:var(--muted);max-width:780px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:rgba(17,26,49,.85);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:16px;box-shadow:0 14px 50px rgba(0,0,0,.18)}label{font-size:13px;color:var(--muted);display:block;margin-bottom:7px}.control{display:flex;gap:10px;align-items:center}select,input,button{font:inherit}select,input[type=range]{width:100%}select{background:#0d1530;border:1px solid var(--line);color:var(--text);padding:10px;border-radius:10px}button{border:1px solid var(--line);background:#152347;color:var(--text);padding:10px 13px;border-radius:10px;cursor:pointer}button:hover{background:#1a2c59}.primary{background:#1e3a5f;border-color:#3b82f6}.stat{padding:15px;border:1px solid var(--line);border-radius:14px;background:#0d1530}.stat .num{font-size:28px;font-weight:700}.muted{color:var(--muted)}.positive{color:var(--good)}.negative{color:var(--danger)}.warn{color:var(--warn)}.tag{display:inline-block;border:1px solid var(--line);padding:4px 8px;border-radius:99px;font-size:12px;margin:3px 4px 3px 0}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;white-space:pre-wrap}.row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.small{font-size:12px}.source{word-break:break-all}.hidden{display:none}.audio-row{display:flex;gap:10px;align-items:center}.audio-row audio{width:100%}@media(max-width:800px){.grid,.three{grid-template-columns:1fr}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">SonifyEarth • Hear the Change</div>
+  <h1>Bangladesh Rainfall MVP</h1>
+  <p class="sub">Ready-to-integrate demo for Compare, Delta, Risk Lens, Anomaly, and Data Passport. National audio is included. City adapter is prepared but its source JSON/WAV files must be supplied by the team.</p>
+
+  <section class="card">
+    <h2>1. Compare</h2>
+    <div class="grid">
+      <div><label>Year A</label><select id="yearA"></select></div>
+      <div><label>Year B</label><select id="yearB"></select></div>
+    </div>
+    <div class="grid three" id="compareStats"></div>
+    <div class="row" style="margin-top:12px"><div class="muted small" id="compareBasis"></div><button class="primary" id="deltaBtn">Play Delta Sound</button></div>
+    <div id="deltaSpec" class="small muted" style="margin-top:10px"></div>
+  </section>
+
+  <section class="card">
+    <h2>2. Listen</h2>
+    <div class="grid"><div><label>Selected Year</label><select id="listenYear"></select></div><div><label>Audio</label><div class="audio-row"><audio id="yearAudio" controls preload="metadata"></audio></div></div></div>
+    <p class="muted small" id="listenNote"></p>
+  </section>
+
+  <section class="card">
+    <h2>3. Risk Lens</h2>
+    <div class="grid three" id="riskStats"></div>
+    <div class="small" id="riskText" style="margin-top:12px"></div>
+  </section>
+
+  <section class="card">
+    <h2>4. Anomaly</h2>
+    <div class="grid three" id="anomalyStats"></div>
+    <p class="muted small">Anomaly is a statistical departure from the documented MVP baseline. It is not a disaster probability.</p>
+  </section>
+
+  <section class="card">
+    <h2>5. Data Passport</h2>
+    <div id="passport"></div>
+  </section>
+
+  <section class="card">
+    <h2>Creative Controls for Delta Sound</h2>
+    <div class="grid three">
+      <div><label>Timbre</label><select id="timbre"><option>sine</option><option>triangle</option><option>square</option><option>sawtooth</option></select></div>
+      <div><label>Base frequency <span id="baseHzValue">440</span> Hz</label><input id="baseHz" type="range" min="220" max="880" value="440"></div>
+      <div><label>Pan <span id="panValue">0</span></label><input id="pan" type="range" min="-1" max="1" step="0.01" value="0"></div>
+    </div>
+    <div style="margin-top:12px"><button id="resetCreative">Reset to Scientific Default</button></div>
+    <p class="muted small">Creative settings change expression only. The numeric Delta and the documented sign/magnitude mapping remain unchanged.</p>
+  </section>
+
+  <section class="card">
+    <h2>Historical Event Context</h2>
+    <div id="events" class="small"></div>
+  </section>
+
+  <section class="card">
+    <h2>City Layer Hook</h2>
+    <p class="muted small">Place <span class="mono">bangladesh_rain_data.json</span> in <span class="mono">data/</span> and the 8 city WAV files in <span class="mono">audio/city/</span>. Use <span class="mono">data/city_data_schema.json</span> as the integration contract.</p>
+  </section>
+</main>
+<script type="module">
+import {compareYears,riskLens,yearAnomaly,playDeltaSound,deltaSoundSpec,CREATIVE_DEFAULT} from '../src/sonifyearth_rainfall.js';
+const [data,events,passport]=await Promise.all([
+  fetch('../data/year_profiles.json').then(r=>r.json()),
+  fetch('../data/historical_events.json').then(r=>r.json()),
+  fetch('../data/data_passport.json').then(r=>r.json())
+]);
+const years=data.profiles.map(p=>p.year);
+for(const id of ['yearA','yearB','listenYear']){
+  const el=document.getElementById(id); el.innerHTML=years.map(y=>`<option>${y}</option>`).join('');
+}
+document.getElementById('yearA').value='2007';document.getElementById('yearB').value='2024';document.getElementById('listenYear').value='2024';
+function profile(y){return data.profiles.find(p=>p.year===Number(y));}
+function fmt(n,d=1){return Number(n).toLocaleString(undefined,{maximumFractionDigits:d,minimumFractionDigits:d});}
+function render(){
+  const A=Number(document.getElementById('yearA').value),B=Number(document.getElementById('yearB').value),L=Number(document.getElementById('listenYear').value);
+  const c=compareYears(A,B,data);
+  const d=document.getElementById('compareStats');
+  d.innerHTML=`<div class="stat"><div class="muted">${A}</div><div class="num">${fmt(c.valueA)} mm</div></div><div class="stat"><div class="muted">${B}</div><div class="num">${fmt(c.valueB)} mm</div></div><div class="stat"><div class="muted">Delta (B − A)</div><div class="num ${c.delta>=0?'positive':'negative'}">${c.delta>=0?'+':''}${fmt(c.delta)} mm</div></div>`;
+  document.getElementById('compareBasis').textContent=c.basis;
+  const delta=deltaSoundSpec(c.delta,{});document.getElementById('deltaSpec').textContent=`Delta sound: ${delta.direction}, ${fmt(delta.duration_s,2)} s, magnitude ${fmt(delta.magnitude_norm,2)}.`;
+  const p=profile(L),r=riskLens(p),a=yearAnomaly(p);
+  document.getElementById('riskStats').innerHTML=`<div class="stat"><div class="muted">Peak day</div><div class="num">${fmt(p.max_daily_mm)} mm/day</div><div class="small">${p.peak_date}</div></div><div class="stat"><div class="muted">BMD reference</div><div class="num">${r.bmd_category}</div><div class="small">${p.heavy_days} heavy • ${p.very_heavy_days} very heavy days</div></div><div class="stat"><div class="muted">Dryness context</div><div class="num">${r.dryness_context}</div><div class="small">z = ${a.z==null?'n/a':fmt(a.z,2)}</div></div>`;
+  document.getElementById('riskText').innerHTML=`<p><b>Waterlogging / flood context:</b> ${r.waterlogging_context}</p><p><b>Landslide context:</b> ${r.landslide_context}</p>`;
+  document.getElementById('anomalyStats').innerHTML=`<div class="stat"><div class="muted">Year anomaly</div><div class="num ${a.value_mm>=0?'positive':'negative'}">${a.value_mm>=0?'+':''}${fmt(a.value_mm)} mm</div></div><div class="stat"><div class="muted">Standardized anomaly</div><div class="num">${a.z==null?'n/a':fmt(a.z,2)} z</div></div><div class="stat"><div class="muted">Peak-day anomaly</div><div class="num">${p.peak_day_anomaly_mm==null?'n/a':(p.peak_day_anomaly_mm>=0?'+':'')+fmt(p.peak_day_anomaly_mm)} mm</div></div>`;
+  const pp=passport;document.getElementById('passport').innerHTML=`<div class="grid"><div><b>Dataset</b><div class="muted">${pp.product}</div></div><div><b>Collection</b><div class="muted">${pp.collection}</div></div><div><b>Variable</b><div class="muted">${pp.variable}</div></div><div><b>Unit</b><div class="muted">${pp.unit}</div></div><div><b>Spatial basis</b><div class="muted">${pp.spatial_basis.user_bbox} → ${pp.spatial_basis.data_bbox}</div></div><div><b>Audio range</b><div class="muted">${pp.audio_mapping.frequency_range_hz} Hz</div></div></div><div class="card mono" style="margin-top:12px">${pp.audio_mapping.formula}\nDelta = Year_B - Year_A\nz = (x - baseline_mean) / baseline_std</div><div class="small source"><b>Source:</b> ${pp.source_provider}. <a href="${pp.official_nasa_climatology_for_upgrade.url}" target="_blank" rel="noreferrer">NASA IMERG climatology</a></div>`;
+  document.getElementById('yearAudio').src=`../audio/national/sonifyearth_rain_${L}.wav`;
+  document.getElementById('listenNote').textContent=p.coverage + '. 2026 is observed-to-date and must not be presented as a complete calendar year.';
+  document.getElementById('events').innerHTML=events.map(e=>`<div class="card" style="margin-top:10px"><b>${e.year}: ${e.title}</b><div>${e.period}</div><div class="muted">${e.context}</div><div class="small muted">${e.note}</div><a href="${e.url}" target="_blank" rel="noreferrer">${e.source}</a></div>`).join('');
+}
+['yearA','yearB','listenYear'].forEach(id=>document.getElementById(id).addEventListener('change',render));
+function settings(){return {timbre:document.getElementById('timbre').value,baseHz:Number(document.getElementById('baseHz').value),pan:Number(document.getElementById('pan').value),gain:0.12};}
+document.getElementById('deltaBtn').addEventListener('click',async()=>{const A=Number(document.getElementById('yearA').value),B=Number(document.getElementById('yearB').value);const c=compareYears(A,B,data);await playDeltaSound(c.delta,settings());});
+document.getElementById('baseHz').addEventListener('input',e=>document.getElementById('baseHzValue').textContent=e.target.value);
+document.getElementById('pan').addEventListener('input',e=>document.getElementById('panValue').textContent=e.target.value);
+document.getElementById('resetCreative').addEventListener('click',()=>{document.getElementById('timbre').value=CREATIVE_DEFAULT.timbre;document.getElementById('baseHz').value=CREATIVE_DEFAULT.baseHz;document.getElementById('pan').value=CREATIVE_DEFAULT.pan;document.getElementById('baseHzValue').textContent=CREATIVE_DEFAULT.baseHz;document.getElementById('panValue').textContent=CREATIVE_DEFAULT.pan;});
+render();
+</script>
+</body>
+</html>
