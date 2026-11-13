@@ -180,8 +180,8 @@ Both modes play the **same selected data**. Only the listening changes.
 ### 1. Get the project
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/ibrahim-hossain-ridoy/SonifyEarth.git
+cd SonifyEarth/sonifyearth
 ```
 
 ### 2. Start the server
