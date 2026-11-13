@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SonifyEarth Production Data JSON & GeoJSON Schemas",
+  "version": "1.0.0",
+  "schemas": {
+    "source_manifest.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "project",
+        "datasets",
+        "mission_temporal_coverage",
+        "aggregate_source_totals",
+        "granule_pairs"
+      ]
+    },
+    "flash_events.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "dataset",
+        "collection_id",
+        "doi",
+        "filtering_rules_applied",
+        "summary_counts",
+        "flashes"
+      ],
+      "flash_item_required": [
+        "flash_id",
+        "flash_address",
+        "flash_index",
+        "granule_id",
+        "source_file",
+        "backgrounds_file",
+        "lat",
+        "lon",
+        "tai93_time",
+        "utc_time",
+        "delta_time",
+        "radiance",
+        "child_count",
+        "quality_flags",
+        "grid_cell",
+        "state",
+        "reason_code",
+        "sound_cue"
+      ]
+    },
+    "observation_windows.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "dataset",
+        "global_observation_census",
+        "granule_observation_windows",
+        "grid_observation_records"
+      ],
+      "record_item_required": [
+        "record_id",
+        "viewtime_index",
+        "granule_id",
+        "source_file",
+        "grid_cell_id",
+        "grid_lat",
+        "grid_lon",
+        "tai93_start",
+        "tai93_end",
+        "utc_start",
+        "utc_end",
+        "effective_obs_seconds",
+        "alert_flag",
+        "quality_interpretation",
+        "saa_status",
+        "state",
+        "reason_code"
+      ]
+    },
+    "three_state_data.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "dataset",
+        "three_state_definitions",
+        "decision_3_effective_observation_sensitivity",
+        "granule_three_state_summaries"
+      ]
+    },
+    "sonifyearth_windows.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "dataset",
+        "locked_sound_mapping",
+        "timeline_bounds",
+        "orbital_and_gap_windows",
+        "saa_transit_windows",
+        "swath_keyframes"
+      ]
+    },
+    "excluded_records_audit.json": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "dataset",
+        "reconciliation_summary",
+        "excluded_flashes",
+        "saa_affected_intervals",
+        "contiguous_fatal_outage_intervals",
+        "qc_deleted_orbit_gaps"
+      ]
+    },
+    "geojson_feature_collection": {
+      "type": "object",
+      "required": [
+        "type",
+        "name",
+        "metadata",
+        "features"
+      ]
+    }
+  }
+}

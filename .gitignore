@@ -1,5 +1,8 @@
 node_modules/
 SonifyEarth.zip
 *.mp4
+!sonifyearth/08_WEBSITE/frontend/iss_lightning_sphere_07312023.mp4
 01_NASA_RAW_DATA/
 06_PROCESSED_DATA/
+!sonifyearth/08_WEBSITE/frontend/06_PROCESSED_DATA/
+!sonifyearth/08_WEBSITE/frontend/06_PROCESSED_DATA/**
