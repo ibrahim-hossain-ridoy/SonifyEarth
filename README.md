@@ -55,11 +55,11 @@ We are a five-member team that built SonifyEarth for the **NASA Space Apps Chall
 
 | | Member | Role |
 |:-:|---|---|
-| 🧭 | **MD Ibrahim Hossain Ridoy** · [@your-handle](https://github.com/your-handle) | Researcher & Team Leader |
-| ⚙️ | **Md. Sulyman Hossain Rifat** · [@your-handle](https://github.com/your-handle) | Backend Developer & Data Analyst |
-| 🎨 | **Tahmid Ullah Sajid** · [@your-handle](https://github.com/your-handle) | UI/UX Designer & Frontend Developer |
-| 🎬 | **MD Rahedul Islam** · [@your-handle](https://github.com/your-handle) | Video Editor & Graphics Designer |
-| ✍️ | **Ta-seen Raihan** · [@your-handle](https://github.com/your-handle) | Script Writer & Storyteller |
+| 🧭 | **MD Ibrahim Hossain Ridoy** · | Researcher & Team Leader |
+| ⚙️ | **Md. Sulyman Hossain Rifat** · | Backend Developer & Data Analyst |
+| 🎨 | **Tahmid Ullah Sajid** · | UI/UX Designer & Frontend Developer |
+| 🎬 | **MD Rahedul Islam** ·| Video Editor & Graphics Designer |
+| ✍️ | **Ta-seen Raihan** · | Script Writer & Storyteller |
 
 ---
 
@@ -68,15 +68,13 @@ We are a five-member team that built SonifyEarth for the **NASA Space Apps Chall
 
 <div align="center">
 
-<!-- Replace YOUR_VIDEO_ID in BOTH lines below with your YouTube video ID. -->
-<a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID">
-  <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg" alt="Watch the SonifyEarth project video on YouTube" width="860">
+<a href="https://youtu.be/3uN5iN5NLmw">
+  <img src="https://img.youtube.com/vi/3uN5iN5NLmw/maxresdefault.jpg" alt="Watch the SonifyEarth project video on YouTube" width="860">
 </a>
 
-**[▶ Watch the 3:40 project video on YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)**
+**[▶ Watch the 3:40 project video on YouTube](https://youtu.be/3uN5iN5NLmw)**
 
 </div>
-
 ---
 
 <a id="screenshots"></a>
