@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": null,
+  "outputDirectory": "sonifyearth/08_WEBSITE/frontend",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*)\\.geojson",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/geo+json; charset=utf-8"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(overview|technology|explorer|listen|archive)",
+      "destination": "/index.html"
+    }
+  ]
+}

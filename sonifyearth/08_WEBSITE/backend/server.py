@@ -84,7 +84,7 @@ class SonifyEarthRequestHandler(SimpleHTTPRequestHandler):
         if not rel_parts or rel == "index.html":
             return os.path.join(FRONTEND_DIR, "index.html")
 
-        if rel in ("favicon.ico", "favicon.svg"):
+        if rel in ("favicon.ico", "favicon.svg") or rel.endswith("favicon.svg"):
             return os.path.join(WORKSPACE_ROOT, "08_WEBSITE", "public", "favicon.svg")
 
         # Check frontend directory first for /css/*, /js/*, etc.

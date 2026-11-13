@@ -13,20 +13,20 @@ import {
   LISTENING_MODES,
   TASK4_MODE_COMPATIBILITY_MAP,
   SOUND_CUE_SPEC,
-} from '../../../09_SOUND_ENGINE/audio_mapping/sound_cue_spec.js';
+} from '../09_SOUND_ENGINE/audio_mapping/sound_cue_spec.js';
 
 export const DATA_ENDPOINTS = Object.freeze({
-  sourceManifest: '/06_PROCESSED_DATA/json/source_manifest.json',
-  flashEvents: '/06_PROCESSED_DATA/json/flash_events.json',
-  observationWindows: '/06_PROCESSED_DATA/json/observation_windows.json',
-  threeStateData: '/06_PROCESSED_DATA/json/three_state_data.json',
-  sonifyearthWindows: '/06_PROCESSED_DATA/json/sonifyearth_windows.json',
-  excludedRecordsAudit: '/06_PROCESSED_DATA/json/excluded_records_audit.json',
-  schema: '/06_PROCESSED_DATA/json/schema.json',
-  realStateExamples: '/05_SCIENTIFIC_VALIDATION/REAL_STATE_EXAMPLES.json',
-  lightningGeoJson: '/06_PROCESSED_DATA/geojson/lightning_events.geojson',
-  observationGridGeoJson: '/06_PROCESSED_DATA/geojson/observation_grid.geojson',
-  unknownCoverageGeoJson: '/06_PROCESSED_DATA/geojson/unknown_coverage.geojson',
+  sourceManifest: './06_PROCESSED_DATA/json/source_manifest.json',
+  flashEvents: './06_PROCESSED_DATA/json/flash_events.json',
+  observationWindows: './06_PROCESSED_DATA/json/observation_windows.json',
+  threeStateData: './06_PROCESSED_DATA/json/three_state_data.json',
+  sonifyearthWindows: './06_PROCESSED_DATA/json/sonifyearth_windows.json',
+  excludedRecordsAudit: './06_PROCESSED_DATA/json/excluded_records_audit.json',
+  schema: './06_PROCESSED_DATA/json/schema.json',
+  realStateExamples: './05_SCIENTIFIC_VALIDATION/REAL_STATE_EXAMPLES.json',
+  lightningGeoJson: './06_PROCESSED_DATA/geojson/lightning_events.geojson',
+  observationGridGeoJson: './06_PROCESSED_DATA/geojson/observation_grid.geojson',
+  unknownCoverageGeoJson: './06_PROCESSED_DATA/geojson/unknown_coverage.geojson',
 });
 
 export const REGION_PRESETS = Object.freeze([
@@ -317,6 +317,17 @@ export class SonifyEarthDataAdapter {
     return this.modeCompatibilityReport;
   }
 
+  resolveEndpoint(url) {
+    if (!url || /^https?:\/\//i.test(url)) return url;
+    // Strip any leading '/', './', or '../../' to a clean frontend-relative path
+    const clean = url.replace(/^(?:\.\.\/)+|^\.\/|^\/+/, '');
+    // In Node test runner environments, normalize to leading-slash workspace path
+    if (typeof window === 'undefined' || !window.location) {
+      return '/' + clean;
+    }
+    return './' + clean;
+  }
+
   /**
    * Loads all production JSON and GeoJSON payloads from /06_PROCESSED_DATA/.
    */
@@ -328,15 +339,16 @@ export class SonifyEarthDataAdapter {
 
       await Promise.all(
         entries.map(async ([key, url]) => {
-          const response = await fetch(url);
+          const resolvedUrl = this.resolveEndpoint(url);
+          const response = await fetch(resolvedUrl);
           if (!response.ok) {
-            throw new Error(`Failed to load ${url} (HTTP ${response.status})`);
+            throw new Error(`Failed to load ${resolvedUrl} (HTTP ${response.status})`);
           }
           const data = await response.json();
           results[key] = data;
           completed += 1;
           if (typeof onProgress === 'function') {
-            onProgress({ completed, total: entries.length, key, url });
+            onProgress({ completed, total: entries.length, key, url: resolvedUrl });
           }
         })
       );

@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="SonifyEarth — Silence Isn't Zero. An Observation-Aware Lightning Jukebox built on NASA ISS LIS Science V2.2 & Backgrounds V2.2 data for the NASA Space Apps Challenge 2026." />
   <title>SonifyEarth — Silence Isn't Zero. | Observation-Aware NASA ISS LIS Lightning Jukebox</title>
-  <link rel="icon" type="image/svg+xml" href="/08_WEBSITE/public/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/styles.css" />
-  <link rel="stylesheet" href="/css/premium.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'" onerror="this.onerror=null;" />
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/premium.css" />
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main scientific workspace</a>
@@ -347,11 +347,11 @@
             id="svs-5011-video"
             class="eic-video-player"
             controls
-            preload="metadata"
-            poster="/Screenshot%202026-11-09%20at%2008.26.06.png"
+            preload="none"
+            poster="./Screenshot%202026-11-09%20at%2008.26.06.png"
             aria-label="NASA SVS 5011 ISS Lightning Sphere Visualization video (no audio track; user-controlled playback)"
           >
-            <source src="/iss_lightning_sphere_07312023.mp4" type="video/mp4" />
+            <source src="./iss_lightning_sphere_07312023.mp4" type="video/mp4" />
             Your browser does not support HTML5 video. You can view the NASA SVS 5011 still frame at Screenshot 2026-11-09 at 08.26.06.png.
           </video>
           <div class="video-caption-bar">
@@ -1454,26 +1454,26 @@
             <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
               <label for="validation-report-select" class="mono" style="font-size: 0.78rem;">Select Report:</label>
               <select id="validation-report-select" class="select-input" style="width: auto; min-height: 38px;">
-                <option value="/07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md">Task 3 Final Scientific Validation Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/THREE_STATE_VALIDATION_REPORT.md">Three-State Model Validation Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/TAI93_UTC_VALIDATION_REPORT.md">TAI93 to UTC Conversion Validation Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/GRANULE_MATCHING_REPORT.md">106-Granule Pairing Validation Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/VIEWTIME_QUALITY_VALIDATION.md">Viewtime &amp; Quality Flag Bitmask Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/FLASH_HIERARCHY_VALIDATION.md">Flash-Group-Event-Area Hierarchy Report</option>
-                <option value="/05_SCIENTIFIC_VALIDATION/SPATIAL_MATCHING_REPORT.md">Spatial Point-in-Cell Matching Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/PRODUCTION_DATA_GENERATION_REPORT.md">Task 4 Production Data Generation Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/FINAL_THREE_STATE_COUNTS.md">Final Three-State Counts &amp; Sensitivity Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/FLASH_EXCLUSION_REPORT.md">Flash Exclusion Audit Report (1,570 Flashes)</option>
-                <option value="/07_PROJECT_REPORTS/validation/SAA_HANDLING_REPORT.md">Conservative SAA Handling Validation Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/JSON_GEOJSON_VALIDATION_REPORT.md">JSON &amp; GeoJSON Schema Validation Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/TASK_2_1_SCIENTIFIC_AUDIT.md">Task 2.1 Scientific Audit Report</option>
-                <option value="/03_DATA_INSPECTION/complete_variable_dictionary.md">Complete 61-Variable NASA Dictionary</option>
-                <option value="/07_PROJECT_REPORTS/validation/DATA_INTEGRITY_AND_GAPS_REPORT.md">Data Integrity &amp; Nov 11 Gap Report</option>
-                <option value="/07_PROJECT_REPORTS/research/NASA_DATA_INSPECTION_REPORT.md">NASA Data Inspection Report</option>
-                <option value="/07_PROJECT_REPORTS/validation/CONTENT_PRESERVATION_AUDIT.md">Redesign Content Preservation Audit</option>
-                <option value="/02_NASA_DOCUMENTATION/SONIFYEARTH_MASTER_PROJECT_SPECIFICATION.md">Master Project Specification</option>
+                <option value="./07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md">Task 3 Final Scientific Validation Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/THREE_STATE_VALIDATION_REPORT.md">Three-State Model Validation Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/TAI93_UTC_VALIDATION_REPORT.md">TAI93 to UTC Conversion Validation Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/GRANULE_MATCHING_REPORT.md">106-Granule Pairing Validation Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/VIEWTIME_QUALITY_VALIDATION.md">Viewtime &amp; Quality Flag Bitmask Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/FLASH_HIERARCHY_VALIDATION.md">Flash-Group-Event-Area Hierarchy Report</option>
+                <option value="./05_SCIENTIFIC_VALIDATION/SPATIAL_MATCHING_REPORT.md">Spatial Point-in-Cell Matching Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/PRODUCTION_DATA_GENERATION_REPORT.md">Task 4 Production Data Generation Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/FINAL_THREE_STATE_COUNTS.md">Final Three-State Counts &amp; Sensitivity Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/FLASH_EXCLUSION_REPORT.md">Flash Exclusion Audit Report (1,570 Flashes)</option>
+                <option value="./07_PROJECT_REPORTS/validation/SAA_HANDLING_REPORT.md">Conservative SAA Handling Validation Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/JSON_GEOJSON_VALIDATION_REPORT.md">JSON &amp; GeoJSON Schema Validation Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/TASK_2_1_SCIENTIFIC_AUDIT.md">Task 2.1 Scientific Audit Report</option>
+                <option value="./03_DATA_INSPECTION/complete_variable_dictionary.md">Complete 61-Variable NASA Dictionary</option>
+                <option value="./07_PROJECT_REPORTS/validation/DATA_INTEGRITY_AND_GAPS_REPORT.md">Data Integrity &amp; Nov 11 Gap Report</option>
+                <option value="./07_PROJECT_REPORTS/research/NASA_DATA_INSPECTION_REPORT.md">NASA Data Inspection Report</option>
+                <option value="./07_PROJECT_REPORTS/validation/CONTENT_PRESERVATION_AUDIT.md">Redesign Content Preservation Audit</option>
+                <option value="./02_NASA_DOCUMENTATION/SONIFYEARTH_MASTER_PROJECT_SPECIFICATION.md">Master Project Specification</option>
               </select>
-              <a id="validation-report-open-link" href="/07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+              <a id="validation-report-open-link" href="./07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
                 Open Raw Report ↗
               </a>
             </div>
@@ -1493,7 +1493,7 @@
                 All 14,554 confirmed <code>DETECTED</code> lightning flashes with TAI93/UTC times, WGS84 coordinates, radiance, footprint, and NetCDF provenance (16.1 MB).
               </p>
             </div>
-            <a href="/06_PROCESSED_DATA/json/flash_events.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
+            <a href="./06_PROCESSED_DATA/json/flash_events.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
           </div>
 
           <div class="download-card">
@@ -1504,7 +1504,7 @@
                 Global 0.5° × 0.5° observation census, 8,459 traceable grid passes, and 71 boundary-cell flash reconciliations (7.2 MB).
               </p>
             </div>
-            <a href="/06_PROCESSED_DATA/json/observation_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
+            <a href="./06_PROCESSED_DATA/json/observation_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
           </div>
 
           <div class="download-card">
@@ -1516,8 +1516,8 @@
               </p>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-              <a href="/06_PROCESSED_DATA/json/source_manifest.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Manifest ↗</a>
-              <a href="/06_PROCESSED_DATA/json/three_state_data.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Three-State ↗</a>
+              <a href="./06_PROCESSED_DATA/json/source_manifest.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Manifest ↗</a>
+              <a href="./06_PROCESSED_DATA/json/three_state_data.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Three-State ↗</a>
             </div>
           </div>
 
@@ -1530,8 +1530,8 @@
               </p>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-              <a href="/06_PROCESSED_DATA/json/excluded_records_audit.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Exclusions ↗</a>
-              <a href="/06_PROCESSED_DATA/json/sonifyearth_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Windows ↗</a>
+              <a href="./06_PROCESSED_DATA/json/excluded_records_audit.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Exclusions ↗</a>
+              <a href="./06_PROCESSED_DATA/json/sonifyearth_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Windows ↗</a>
             </div>
           </div>
 
@@ -1544,9 +1544,9 @@
               </p>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-              <a href="/06_PROCESSED_DATA/geojson/lightning_events.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Flashes ↗</a>
-              <a href="/06_PROCESSED_DATA/geojson/observation_grid.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Grid ↗</a>
-              <a href="/06_PROCESSED_DATA/geojson/unknown_coverage.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Unknown ↗</a>
+              <a href="./06_PROCESSED_DATA/geojson/lightning_events.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Flashes ↗</a>
+              <a href="./06_PROCESSED_DATA/geojson/observation_grid.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Grid ↗</a>
+              <a href="./06_PROCESSED_DATA/geojson/unknown_coverage.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Unknown ↗</a>
             </div>
           </div>
 
@@ -1559,10 +1559,10 @@
               </p>
             </div>
             <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-              <a href="/02_NASA_DOCUMENTATION/science_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Science Guide ↗</a>
-              <a href="/02_NASA_DOCUMENTATION/backgrounds_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">BG Guide ↗</a>
-              <a href="/02_NASA_DOCUMENTATION/lis_algorithm.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ATBD ↗</a>
-              <a href="/02_NASA_DOCUMENTATION/lis_anomalies.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Anomalies ↗</a>
+              <a href="./02_NASA_DOCUMENTATION/science_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Science Guide ↗</a>
+              <a href="./02_NASA_DOCUMENTATION/backgrounds_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">BG Guide ↗</a>
+              <a href="./02_NASA_DOCUMENTATION/lis_algorithm.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ATBD ↗</a>
+              <a href="./02_NASA_DOCUMENTATION/lis_anomalies.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Anomalies ↗</a>
             </div>
           </div>
         </div>
@@ -1588,7 +1588,7 @@
     </div>
   </footer>
 
-  <script type="module" src="/js/router.js"></script>
-  <script type="module" src="/js/app.js"></script>
+  <script type="module" src="./js/router.js"></script>
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>

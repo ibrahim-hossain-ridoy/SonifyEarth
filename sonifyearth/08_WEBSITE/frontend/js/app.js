@@ -25,7 +25,7 @@ import { GlobalLisMapView } from './map_view.js';
 import { SynchronizedTimelineView } from './timeline_view.js';
 import { EvidenceInspectorView } from './inspector_view.js';
 import { HeroOrbitGlobe } from './hero_globe.js';
-import { SonifyEarthSoundEngine } from '../../../09_SOUND_ENGINE/playback/sound_engine.js';
+import { SonifyEarthSoundEngine } from '../09_SOUND_ENGINE/playback/sound_engine.js';
 
 const PIPELINE_STAGES = [
   {
@@ -307,7 +307,7 @@ export class SonifyEarthApplication {
       }
 
       // Load default validation report into Tab 6 reader
-      this._loadValidationReportText('/07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md');
+      this._loadValidationReportText('./07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md');
 
       this.state.isReady = true;
       if (loadBanner) {
@@ -762,16 +762,23 @@ export class SonifyEarthApplication {
     });
   }
 
+  _resolveReportUrl(reportUrl) {
+    if (!reportUrl || /^https?:\/\//i.test(reportUrl)) return reportUrl;
+    const clean = reportUrl.replace(/^(?:\.\.\/)+|^\.\/|^\/+/, '');
+    return './' + clean;
+  }
+
   async _loadValidationReportText(reportUrl) {
+    const resolvedUrl = this._resolveReportUrl(reportUrl);
     const viewer = document.getElementById('validation-report-viewer');
     const openLink = document.getElementById('validation-report-open-link');
-    if (openLink && reportUrl) {
-      openLink.setAttribute('href', reportUrl);
+    if (openLink && resolvedUrl) {
+      openLink.setAttribute('href', resolvedUrl);
     }
-    if (!viewer || !reportUrl) return;
-    viewer.textContent = `Loading ${reportUrl}…`;
+    if (!viewer || !resolvedUrl) return;
+    viewer.textContent = `Loading ${resolvedUrl}…`;
     try {
-      const resp = await fetch(reportUrl);
+      const resp = await fetch(resolvedUrl);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const rawText = await resp.text();
       // Normalize any local machine path prefixes in historical markdown reports to clean relative workspace paths
@@ -781,7 +788,7 @@ export class SonifyEarthApplication {
         .replace(/\/Users\/hello\/[^\s)`"']*/g, '[workspace]');
       viewer.textContent = sanitizedText;
     } catch (err) {
-      viewer.textContent = `Could not load ${reportUrl}: ${err.message || err}`;
+      viewer.textContent = `Could not load ${resolvedUrl}: ${err.message || err}`;
     }
   }
 

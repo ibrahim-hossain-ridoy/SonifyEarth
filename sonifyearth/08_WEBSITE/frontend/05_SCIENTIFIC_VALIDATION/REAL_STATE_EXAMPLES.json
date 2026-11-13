@@ -1,0 +1,180 @@
+{
+  "metadata": {
+    "generated_at": "2026-11-11T12:32:34.515700+00:00",
+    "tai93_leap_seconds_applied": 10.0,
+    "fatal_bitmask_hex": "0x55",
+    "warning_bitmask_hex": "0xAA"
+  },
+  "examples": [
+    {
+      "state": "DETECTED",
+      "science_filename": "ISS_LIS_SC_V2.2_20231109_225212_FIN.nc",
+      "backgrounds_filename": "ISS_LIS_BG_V2.2_20231109_225212_FIN.nc",
+      "orbit_id": 225212,
+      "original_record_identifiers": {
+        "lightning_flash_address": 1,
+        "viewtime_record_index": 9994
+      },
+      "tai93_flash_timestamp": 973725252.6372032,
+      "utc_flash_timestamp": "2023-11-09T23:14:02.637203Z",
+      "tai93_viewtime_interval": [
+        973725219,
+        973725278
+      ],
+      "utc_viewtime_interval": [
+        "2023-11-09T23:13:29Z",
+        "2023-11-09T23:14:28Z"
+      ],
+      "latitude": -6.377313137054443,
+      "longitude": -72.26717376708984,
+      "grid_cell_center": [
+        -6.25,
+        -72.25
+      ],
+      "observation_duration_seconds": 43.92000198364258,
+      "valid_flash_count_in_cell": 1,
+      "quality_flags": {
+        "lightning_flash_alert_flag": 2,
+        "viewtime_alert_flag": 2,
+        "fatal_flags_present": false,
+        "warning_flags_present": true
+      },
+      "classification_reason": "Quality-accepted lightning flash verified inside actively observed 0.5-deg grid cell with zero fatal flags"
+    },
+    {
+      "state": "OBSERVED_NO_DETECTION",
+      "science_filename": "ISS_LIS_SC_V2.2_20231109_225212_FIN.nc",
+      "backgrounds_filename": "ISS_LIS_BG_V2.2_20231109_225212_FIN.nc",
+      "orbit_id": 225212,
+      "original_record_identifiers": {
+        "viewtime_record_index": 7500
+      },
+      "tai93_viewtime_interval": [
+        973724801,
+        973724854
+      ],
+      "utc_viewtime_interval": [
+        "2023-11-09T23:06:31Z",
+        "2023-11-09T23:07:24Z"
+      ],
+      "latitude": -27.75,
+      "longitude": -91.75,
+      "grid_resolution_degrees": 0.5,
+      "observation_duration_seconds": 49.400001525878906,
+      "valid_flash_count": 0,
+      "quality_flags": {
+        "viewtime_alert_flag": 2,
+        "fatal_flags_present": false,
+        "warning_flags_present": true,
+        "saa_active": false
+      },
+      "classification_reason": "Positive effective observation duration (45+ s) within active orbital swath with zero fatal flags, no SAA, and zero flashes within 1.5-deg buffer"
+    },
+    {
+      "state": "UNKNOWN",
+      "reason_code": "OUTSIDE_OBSERVATION_COVERAGE",
+      "science_filename": "ISS_LIS_SC_V2.2_20231109_225212_FIN.nc",
+      "backgrounds_filename": "ISS_LIS_BG_V2.2_20231109_225212_FIN.nc",
+      "orbit_id": 225212,
+      "original_record_identifiers": {
+        "query_type": "spatial_temporal_lookup"
+      },
+      "tai93_timestamp": 973725252.0,
+      "utc_timestamp": "2023-11-09T23:14:02Z",
+      "latitude": 64.1466,
+      "longitude": -21.9426,
+      "location_name": "Reykjavik, Iceland (High-latitude outside ~+-54 deg ISS LIS envelope)",
+      "observation_duration_seconds": 0.0,
+      "valid_flash_count": null,
+      "quality_flags": {
+        "applicable": false
+      },
+      "classification_reason": "Location is poleward of ISS LIS instantaneous FOV swath (~+-54 deg max reach); zero viewtime records exist"
+    },
+    {
+      "state": "UNKNOWN",
+      "reason_code": "MISSING_SOURCE_DATA",
+      "science_filename": null,
+      "backgrounds_filename": null,
+      "orbit_id": null,
+      "original_record_identifiers": {
+        "preceding_granule": "ISS_LIS_SC_V2.2_20231111_072242_FIN.nc",
+        "subsequent_granule": "ISS_LIS_SC_V2.2_20231111_120122_FIN.nc",
+        "deleted_nqc_orbits": [
+          "ISS_LIS_SC_V2.2_20231111_085535_NQC",
+          "ISS_LIS_SC_V2.2_20231111_102828_NQC"
+        ]
+      },
+      "tai93_interval": [
+        973846545.3,
+        973857692.2
+      ],
+      "utc_interval": [
+        "2023-11-11T08:55:35.300Z",
+        "2023-11-11T12:01:22.200Z"
+      ],
+      "gap_duration_seconds": 11146.9,
+      "latitude": 0.0,
+      "longitude": 0.0,
+      "observation_duration_seconds": null,
+      "valid_flash_count": null,
+      "quality_flags": {
+        "qc_deletion_reason": "Excessive optical noise (lis_anomalies.pdf p. 94)"
+      },
+      "classification_reason": "Time window falls inside the 185.8-minute NASA QC noise deletion gap on 2023-11-11"
+    },
+    {
+      "state": "UNKNOWN",
+      "reason_code": "FATAL_QUALITY_FLAG",
+      "science_filename": "ISS_LIS_SC_V2.2_20231116_172457_FIN.nc",
+      "backgrounds_filename": "ISS_LIS_BG_V2.2_20231116_172457_FIN.nc",
+      "orbit_id": 172457,
+      "original_record_identifiers": {
+        "one_second_index_range": [
+          0,
+          4817
+        ]
+      },
+      "tai93_interval": [
+        974309108.0,
+        974313925.0
+      ],
+      "utc_interval": [
+        "2023-11-16T17:24:58Z",
+        "2023-11-16T18:45:15Z"
+      ],
+      "contiguous_fatal_seconds": 4818,
+      "viewtime_records_present_for_interval": 0,
+      "valid_flash_count": 0,
+      "quality_flags": {
+        "one_second_alert_summary_sample": 1,
+        "one_second_instrument_alert_sample": 33,
+        "fatal_flags_present": true
+      },
+      "classification_reason": "NASA Class 4 partial orbit: 4,818 contiguous fatal seconds (instrument off / anomaly) automatically excluded from viewtime array"
+    },
+    {
+      "state": "UNKNOWN",
+      "reason_code": "INSUFFICIENT_EVIDENCE_SAA_RADIATION",
+      "science_filename": "ISS_LIS_SC_V2.2_20231110_080926_FIN.nc",
+      "backgrounds_filename": "ISS_LIS_BG_V2.2_20231110_080926_FIN.nc",
+      "orbit_id": 80926,
+      "original_record_identifiers": {
+        "bg_info_index": 4830,
+        "nearest_bg_summary_index": 90
+      },
+      "tai93_timestamp": 973762207.0,
+      "utc_timestamp": "2023-11-10T09:29:57Z",
+      "boresight_latitude": -31.19997215270996,
+      "boresight_longitude": -19.029970169067383,
+      "observation_duration_seconds": null,
+      "valid_flash_count": null,
+      "quality_flags": {
+        "bg_info_external_alert": 123,
+        "saa_model_1_active": true,
+        "saa_model_2_active": true
+      },
+      "classification_reason": "Spacecraft transiting South Atlantic Anomaly (SAA Model 1 & 2 active); trapped proton radiation induces optical noise saturation"
+    }
+  ]
+}
