@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SonifyEarth — Silence Isn't Zero. An Observation-Aware Lightning Jukebox built on NASA ISS LIS Science V2.2 & Backgrounds V2.2 data for the NASA Space Apps Challenge 2026." />
+  <title>SonifyEarth — Silence Isn't Zero. | Observation-Aware NASA ISS LIS Lightning Jukebox</title>
+  <link rel="icon" type="image/svg+xml" href="/08_WEBSITE/public/favicon.svg" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main scientific workspace</a>
+
+  <!-- Screen-reader live region for synchronous audio and state announcements -->
+  <div id="sr-live-announcer" class="sr-only" aria-live="polite" aria-atomic="true">
+    SonifyEarth initialized. Audio playback is paused (no autoplay). Historical NASA ISS LIS V2.2 archive ready.
+  </div>
+
+  <!-- Sticky Deep-Space Observatory Header & 9-Section Navigation -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="#page-landing" class="brand-link" aria-label="SonifyEarth Home — Silence Isn't Zero">
+        <svg class="brand-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <rect width="64" height="64" rx="14" fill="#070D19" stroke="#38BDF8" stroke-width="2" />
+          <circle cx="32" cy="32" r="20" stroke="#38BDF8" stroke-width="2" stroke-dasharray="5 3" />
+          <ellipse cx="32" cy="32" rx="25" ry="10" transform="rotate(-28 32 32)" stroke="#38BDF8" stroke-width="1.8" />
+          <polygon points="32,12 36,27 49,32 36,37 32,52 28,37 15,32 28,27" fill="#FBBF24" />
+        </svg>
+        <div class="brand-text-group">
+          <span class="brand-name">SonifyEarth</span>
+          <span class="brand-tagline">Silence Isn't Zero. · ISS LIS V2.2</span>
+        </div>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary observatory sections">
+        <a href="#page-landing" class="nav-link active" data-nav-target="page-landing">Home</a>
+        <a href="#page-mission" class="nav-link" data-nav-target="page-mission">The Mission</a>
+        <a href="#page-eic-visual" class="nav-link" data-nav-target="page-eic-visual">NASA Visualization</a>
+        <a href="#page-data-journey" class="nav-link" data-nav-target="page-data-journey">Data Journey</a>
+        <a href="#page-map-explorer" class="nav-link" data-nav-target="page-map-explorer">Global Explorer</a>
+        <a href="#page-timeline-dashboard" class="nav-link" data-nav-target="page-timeline-dashboard">Timeline</a>
+        <a href="#page-listening-modes" class="nav-link" data-nav-target="page-listening-modes">Listen</a>
+        <a href="#page-evidence-inspector" class="nav-link" data-nav-target="page-evidence-inspector">Evidence Inspector</a>
+        <a href="#page-methodology" class="nav-link" data-nav-target="page-methodology">Data &amp; Methodology</a>
+      </nav>
+
+      <div class="header-quick-actions">
+        <span class="historical-pill" title="Archival NASA dataset: Nov 9–16, 2023 (Not a live lightning feed)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Historical NASA Archive (Nov 9–16, 2023)</span>
+        </span>
+        <button type="button" id="header-mode-badge-btn" class="btn btn-sm" aria-label="Toggle listening mode (currently Observation-Aware)">
+          Mode: <strong id="header-active-mode-label" class="mono">OBSERVATION-AWARE</strong>
+        </button>
+        <button type="button" id="header-mute-btn" class="btn btn-sm" aria-pressed="false" aria-label="Mute or unmute Web Audio engine">
+          <span id="header-mute-label">Mute Audio</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="main-container" role="main">
+    <!-- Data Load Status Banner -->
+    <div id="data-load-banner" class="lineage-notice" style="margin-top: var(--space-4);" role="status" aria-live="polite">
+      Loading validated NASA ISS LIS V2.2 production JSON &amp; GeoJSON packages from <code>06_PROCESSED_DATA/</code>…
+    </div>
+
+    <!-- ======================================================================
+         SECTION 1 — HOME / CINEMATIC HERO (#page-landing)
+         ====================================================================== -->
+    <section id="page-landing" class="page-section" aria-labelledby="landing-heading">
+      <div class="hero-stage">
+        <!-- Left Hero Copy -->
+        <div class="hero-copy-column">
+          <span class="hero-kicker-badge">
+            <span>◆</span>
+            <span>NASA Space Apps Challenge 2026 · The Earth Information Jukebox</span>
+          </span>
+
+          <h1 id="landing-heading" class="hero-title">
+            SonifyEarth
+            <span class="highlight-silence">Silence Isn't Zero.</span>
+          </h1>
+
+          <p class="hero-descriptor">
+            <strong>An Observation-Aware Lightning Jukebox.</strong> Transforming quality-controlled NASA International Space Station Lightning Imaging Sensor (<strong>ISS LIS Science V2.2 &amp; Backgrounds V2.2</strong>) orbital records into a scientifically traceable visual and acoustic experience.
+          </p>
+
+          <div class="central-question-box">
+            <p class="central-question-label">The Central Scientific Question</p>
+            <p class="central-question-text">
+              “When a lightning map is quiet, what does that silence actually mean?”
+            </p>
+            <p style="margin: 0.45rem 0 0 0; font-size: 0.88rem; color: var(--text-secondary);">
+              A location with no lightning markers is not automatically a calm sky. It may mean the satellite was actively watching and saw zero flashes—or it may mean the spacecraft was on the other side of Earth, blinded by South Atlantic Anomaly radiation, or offline.
+            </p>
+          </div>
+
+          <div class="hero-cta-row">
+            <a href="#page-map-explorer" id="cta-explore-lightning-btn" class="btn btn-primary">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="10 8 16 12 10 16 10 8"></polygon>
+              </svg>
+              <span>Explore the Earth</span>
+            </a>
+            <a href="#page-mission" id="cta-discover-science-btn" class="btn">
+              <span>Discover the Science</span>
+            </a>
+            <a href="#page-evidence-inspector" class="btn btn-gold">
+              <span>Why Did I Hear That?</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Hero Visual: Live Animated Earth-and-Orbit Scene -->
+        <div class="hero-orbit-showcase" aria-label="Interactive ISS LIS Orbital Observation Scene">
+          <div class="hero-orbit-canvas-wrap">
+            <canvas
+              id="hero-orbit-canvas"
+              width="580"
+              height="420"
+              role="img"
+              aria-label="Animated Earth globe showing the 51.6 degree ISS orbital track, 550 km optical camera swath, golden DETECTED lightning flashes, cyan OBSERVED_NO_DETECTION quiet swath, and violet UNKNOWN South Atlantic Anomaly and polar zones."
+            ></canvas>
+            <div class="hero-orbit-hud-pill" id="hero-orbit-hud-text">
+              ISS Orbit: ±51.6° · Swath: ~550 km · Viewtime: ~90s/pass
+            </div>
+          </div>
+
+          <div class="hero-orbit-controls">
+            <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
+              <label for="hero-orbit-state-select" class="mono" style="font-size: 0.75rem; color: var(--text-secondary);">Highlight State:</label>
+              <select id="hero-orbit-state-select" class="select-input" style="width: auto; min-height: 34px; padding: 0.25rem 0.55rem; font-size: 0.78rem;">
+                <option value="ALL">All 3 Orbital States</option>
+                <option value="DETECTED">◆ DETECTED (Flash Seen)</option>
+                <option value="OBSERVED_NO_DETECTION">◎ OBSERVED_NO_DETECTION (Quiet Swath)</option>
+                <option value="UNKNOWN">⊘ UNKNOWN (SAA / Polar / Unviewed)</option>
+              </select>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <button type="button" id="hero-orbit-audition-btn" class="btn btn-sm" title="Hear the highlighted orbital state cue">
+                Hear State Cue ♪
+              </button>
+              <button type="button" id="hero-orbit-pause-btn" class="btn btn-sm" aria-pressed="false">
+                Pause Orbit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restrained 4-Stat Archival Ribbon (Loaded Dynamically from Task 4 Production JSON) -->
+      <div class="hero-archive-ribbon" role="region" aria-label="Verified 7-Day NASA ISS LIS V2.2 Archival Summary (Nov 9–16, 2023)">
+        <div class="ribbon-stat-card">
+          <p class="metric-card-header">Confirmed Flashes (◆ DETECTED)</p>
+          <p id="hero-metric-confirmed-flashes" class="metric-value-lg mono" style="color: var(--state-detected);">14,554</p>
+          <p class="metric-subtext">
+            From <span id="hero-metric-raw-flashes" class="mono">16,124</span> raw flashes (<span id="hero-metric-excluded-flashes" class="mono">1,570</span> QC/SAA exclusions)
+          </p>
+        </div>
+        <div class="ribbon-stat-card">
+          <p class="metric-card-header">Verified Quiet Passes (◎ OBSERVED)</p>
+          <p id="hero-metric-observed-passes" class="metric-value-lg mono" style="color: var(--state-observed);">3,994,260</p>
+          <p class="metric-subtext">0.5° × 0.5° passes with <code>viewtime &gt; 0.0 s</code> &amp; 0 flashes</p>
+        </div>
+        <div class="ribbon-stat-card">
+          <p class="metric-card-header">Uncertain &amp; Blinded (⊘ UNKNOWN)</p>
+          <p id="hero-metric-unknown-passes" class="metric-value-lg mono" style="color: var(--state-unknown);">161,468</p>
+          <p class="metric-subtext">
+            <span id="hero-metric-saa-windows" class="mono">47</span> SAA transits · <span id="hero-metric-fatal-windows" class="mono">10</span> fatal runs · <span id="hero-metric-qc-gaps" class="mono">1</span> QC gap
+          </p>
+        </div>
+        <div class="ribbon-stat-card">
+          <p class="metric-card-header">Final Operational ISS LIS Week</p>
+          <p id="hero-metric-granule-pairs" class="metric-value-lg mono">106 Pairs</p>
+          <p class="metric-subtext">Nov 9–16, 2023 · <code>DATA111</code> Science + <code>DATA211</code> Backgrounds</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 2 — THE MISSION & THREE-STATE STORYTELLING (#page-mission)
+         ====================================================================== -->
+    <section id="page-mission" class="page-section" aria-labelledby="mission-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 2 · The Mission &amp; Orbital Observation Problem</p>
+        <h2 id="mission-heading" class="section-title">Why Orbital Lightning Silence Has Two Completely Different Meanings</h2>
+        <p class="section-subtitle">
+          Unlike a geostationary weather satellite staring at one hemisphere, the International Space Station races around Earth at <strong>400 km altitude</strong> along a <strong>51.6° inclined orbit</strong>. Its Lightning Imaging Sensor (LIS) sweeps a narrow <strong>~550 km × 550 km optical camera footprint</strong>, viewing any single storm cell for only <strong>~80–95 seconds per overpass</strong>.
+        </p>
+      </div>
+
+      <div class="mission-story-grid">
+        <!-- Left Card: Interactive Security-Camera Analogy Switcher -->
+        <div class="analogy-card" aria-labelledby="security-camera-analogy-heading">
+          <h3 id="security-camera-analogy-heading" class="analogy-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+            Interactive Analogy: The Moving Hallway Security Camera
+          </h3>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
+            Imagine a security guard carrying a single flashlight camera down a long building corridor. If a room has no recorded flashes on the log sheet, what happened? Click each camera condition below to compare:
+          </p>
+
+          <div class="camera-simulator-tabs" role="tablist" aria-label="Security camera analogy states">
+            <button type="button" class="camera-sim-btn active" data-cam-state="DETECTED" role="tab" aria-selected="true">
+              1. Camera On + Flash ◆
+            </button>
+            <button type="button" class="camera-sim-btn" data-cam-state="OBSERVED_NO_DETECTION" role="tab" aria-selected="false">
+              2. Camera On + Quiet ◎
+            </button>
+            <button type="button" class="camera-sim-btn" data-cam-state="UNKNOWN" role="tab" aria-selected="false">
+              3. Camera Off / Elsewhere ⊘
+            </button>
+          </div>
+
+          <div class="camera-sim-stage" id="camera-sim-stage-panel" aria-live="polite">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap;">
+              <span id="camera-sim-badge" class="state-badge state-badge-detected">◆ DETECTED</span>
+              <span id="camera-sim-metric" class="mono" style="font-size: 0.78rem; color: var(--accent-earth-blue);">14,554 Confirmed Flashes (5,146 Viewtime Cell Passes)</span>
+            </div>
+            <h4 id="camera-sim-headline" style="margin: 0.25rem 0 0 0; font-size: 1.05rem;">
+              Camera Pointed at Hallway — Optical Flash Verified
+            </h4>
+            <p id="camera-sim-body" style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+              The ISS LIS 128×128 CCD array (777.4 nm oxygen line) was actively pointing at this 0.5° × 0.5° cell with clean telemetry (fatal bitmask 0x55 == 0, non-glint, outside SAA radiation) and captured a confirmed optical lightning flash.
+            </p>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; margin-top: 0.35rem;">
+              <span id="camera-sim-sound-desc" class="mono" style="font-size: 0.78rem; color: var(--state-detected);">
+                Sound Cue: Short percussive pulse (880 → 440 Hz, 65 ms)
+              </span>
+              <button type="button" id="camera-sim-play-btn" class="btn btn-sm">
+                Audition This State ♪
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card: Why Traditional Lightning Maps Mislead & How SonifyEarth Solves It -->
+        <div class="hero-card">
+          <div>
+            <p class="section-eyebrow">Scientific Innovation</p>
+            <h3 style="margin: 0.2rem 0 var(--space-2) 0; font-size: 1.25rem;">
+              From Binary Event Maps to Three-State Epistemic Honesty
+            </h3>
+            <p style="margin: 0 0 var(--space-3) 0; font-size: 0.9rem; color: var(--text-secondary);">
+              Conventional lightning sonifications and maps plot only flash dots on a blank background—treating unviewed latitudes (<code>&gt; ±54°</code>), South Atlantic Anomaly radiation zones (<code>18,571 s</code> across <code>47</code> transits), and telemetry outages (<code>8,232 s</code> fatal flags + <code>5,519.2 s</code> Nov 11 QC gap) identically to a genuinely calm sky.
+            </p>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>
+                <strong>Swath Geometry Reality:</strong> Out of <code>259,200</code> global 0.5° × 0.5° cells on Earth, ISS LIS observed <code>160,560</code> cells during Nov 9–16, 2023, while <code>98,640</code> cells poleward of <code>[-55.75°, +55.25°]</code> received zero viewtime.
+              </li>
+              <li>
+                <strong>Diurnal Sensitivity Context:</strong> Because sunlight reflects off cloud tops, ISS LIS optical detection efficiency ranges from <strong>~69% near local solar noon to ~88% at night</strong> (<code>science_v2_guide.pdf</code> p. 20).
+              </li>
+              <li>
+                <strong>Optical Radiance ≠ Storm Severity:</strong> Flash radiance (<code>uJ/sr/m2/um</code>) measures cloud-top scattered light, which depends on cloud optical depth and viewing angle—so SonifyEarth keeps flash pulse loudness uniform and never labels radiance as storm destructiveness.
+              </li>
+            </ul>
+          </div>
+          <div class="lineage-notice">
+            <strong>Primary Attribution:</strong> NASA GHRC DAAC Quality Controlled ISS LIS Science V2.2 (<code>10.5067/LIS/ISSLIS/DATA111</code>) + Backgrounds V2.2 (<code>10.5067/LIS/ISSLIS/DATA211</code>) + NASA SVS 5011.
+          </div>
+        </div>
+      </div>
+
+      <!-- Three Scientific States Comparison Cards -->
+      <div class="analogy-states-grid" role="region" aria-label="The Three Scientific Observation States">
+        <div class="analogy-state-item">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="state-badge state-badge-detected">◆ DETECTED</span>
+              <span class="mono" style="font-size: 0.76rem; color: var(--state-detected);">14,554 Flashes · 5,146 Passes</span>
+            </div>
+            <h3 style="margin: 0.6rem 0 0.35rem 0; font-size: 1.05rem;">Confirmed Optical Lightning Flash</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              <strong>Scientific Rule:</strong> <code>(lightning_flash_alert_flag &amp; 0x55) == 0</code>, ATBD solar glint angle clean (<code>glint_index &lt; cos(5°) = 0.996195</code>), and zero 1-second SAA overlap (<code>(bg_info_external_alert &amp; 0x03) == 0</code>).
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.65rem; font-size: 0.8rem; color: var(--text-secondary);">
+            <div><strong>Visual Encoding:</strong> Solid 2px Gold Diamond (<code>◆ #FBBF24</code>)</div>
+            <div><strong>Acoustic Cue:</strong> Short 65 ms percussive pulse (880 → 440 Hz)</div>
+          </div>
+        </div>
+
+        <div class="analogy-state-item">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="state-badge state-badge-observed">◎ OBSERVED_NO_DETECTION</span>
+              <span class="mono" style="font-size: 0.76rem; color: var(--state-observed);">3,994,260 Quiet Passes</span>
+            </div>
+            <h3 style="margin: 0.6rem 0 0.35rem 0; font-size: 1.05rem;">Verified Active Surveillance — Zero Flashes</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              <strong>Scientific Rule:</strong> Positive observation duration <code>viewtime_effective_obs &gt; 0.0 s</code> (minimum <code>0.040 s</code> = 20 CCD frames at 500 Hz), <code>(viewtime_alert_flag &amp; 0x55) == 0</code>, outside SAA radiation, and <code>0</code> confirmed flashes in cell.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.65rem; font-size: 0.8rem; color: var(--text-secondary);">
+            <div><strong>Visual Encoding:</strong> Solid 1.5px Cyan Ring / Swath (<code>◎ #38BDF8</code>)</div>
+            <div><strong>Acoustic Cue:</strong> Audible sustained observation texture (220/330 Hz + 360 Hz band)</div>
+          </div>
+        </div>
+
+        <div class="analogy-state-item">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap;">
+              <span class="state-badge state-badge-unknown">⊘ UNKNOWN</span>
+              <span class="mono" style="font-size: 0.76rem; color: var(--state-unknown);">161,468 SAA Passes · 1,570 Excluded</span>
+            </div>
+            <h3 style="margin: 0.6rem 0 0.35rem 0; font-size: 1.05rem;">Unobserved, Radiation-Blinded, or Invalid</h3>
+            <p style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              <strong>Scientific Rule:</strong> Never treated as zero lightning. Assigned one of <strong>5 explicit reason codes</strong>: <code>INSUFFICIENT_EVIDENCE_SAA_RADIATION</code>, <code>FATAL_QUALITY_FLAG</code>, <code>MISSING_SOURCE_DATA</code>, <code>OUTSIDE_OBSERVATION_COVERAGE</code>, or <code>UNRESOLVED_TIME_MATCH</code>.
+            </p>
+          </div>
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.65rem; font-size: 0.8rem; color: var(--text-secondary);">
+            <div><strong>Visual Encoding:</strong> Dashed 2px Hatched Violet (<code>⊘ #C084FC</code>)</div>
+            <div><strong>Acoustic Cue:</strong> Distinct neutral two-part chime (528 Hz → 396 Hz) + reason label</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 3 — NASA EIC VISUALIZATION (SVS 5011) (#page-eic-visual)
+         ====================================================================== -->
+    <section id="page-eic-visual" class="page-section" aria-labelledby="eic-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 3 · Official NASA Earth Information Center Reference</p>
+        <h2 id="eic-heading" class="section-title">NASA SVS 5011 — ISS Lightning Sphere Visualization</h2>
+        <p class="section-subtitle">
+          Experience the official NASA Scientific Visualization Studio spherical showcase alongside a transparent scientific lineage comparison between the July 2023 SVS 5011 visual reference and our November 2023 V2.2 analytical data engine.
+        </p>
+      </div>
+
+      <div class="eic-grid">
+        <div class="video-showcase-card">
+          <video
+            id="svs-5011-video"
+            class="eic-video-player"
+            controls
+            preload="metadata"
+            poster="/Screenshot%202026-11-09%20at%2008.26.06.png"
+            aria-label="NASA SVS 5011 ISS Lightning Sphere Visualization video (no audio track; user-controlled playback)"
+          >
+            <source src="/iss_lightning_sphere_07312023.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video. You can view the NASA SVS 5011 still frame at Screenshot 2026-11-09 at 08.26.06.png.
+          </video>
+          <div class="video-caption-bar">
+            <span>
+              <strong>Official Asset:</strong> <code>iss_lightning_sphere_07312023.mp4</code> (1920×1080 · 30 fps · 216.70 s · Silent visual track)
+            </span>
+            <span class="mono" style="color: var(--accent-earth-blue);">
+              Credit: NASA / Earth Information Center / SVS ID 5011
+            </span>
+          </div>
+        </div>
+
+        <div class="lineage-disclosure-box">
+          <div>
+            <span class="state-badge state-badge-observed">Archival Visual Reference: Released July 31, 2023</span>
+            <h3 style="margin: var(--space-3) 0 var(--space-2) 0;">What You Are Seeing in NASA SVS 5011</h3>
+            <p style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
+              NASA SVS 5011 visualizes how the Lightning Imaging Sensor (LIS) aboard the International Space Station sweeps a narrow diagonal corridor across the tropics and mid-latitudes (<code>±51.6°</code> orbital inclination, ~550 km camera swath), illuminating golden optical lightning flashes only where the spacecraft is actively looking.
+            </p>
+          </div>
+
+          <div class="lineage-notice">
+            <h4 style="margin: 0 0 0.4rem 0; color: var(--text-primary); font-size: 0.9rem;">
+              Explicit Scientific Lineage &amp; Synchronization Disclosure
+            </h4>
+            <ul style="margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.38rem; font-size: 0.84rem;">
+              <li>
+                <strong>SVS 5011 Visual Lineage (V1 Reference):</strong> The video asset (<code>iss_lightning_sphere_07312023.mp4</code>, released July 31, 2023) is a pre-rendered NASA Earth Information Center visualization built from earlier ISS LIS V1 orbital composites.
+              </li>
+              <li>
+                <strong>SonifyEarth Analytical Lineage (V2.2 Final QC):</strong> The interactive map, timeline, sound engine, and evidence inspector operate on the validated 7-day <strong>Quality Controlled ISS LIS Science V2.2 (<code>DATA111</code>) &amp; Backgrounds V2.2 (<code>DATA211</code>)</strong> archive spanning <strong>November 9, 2023 (22:52:12Z) to November 16, 2023 (21:17:00Z)</strong>.
+              </li>
+              <li>
+                <strong>No False Sync Claim:</strong> Because SVS 5011 was rendered prior to November 2023, SonifyEarth does <strong>not</strong> claim pixel-level or frame-by-frame synchronization between the SVS 5011 MP4 video and the November 2023 V2.2 dataset.
+              </li>
+            </ul>
+          </div>
+
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <button type="button" id="svs-play-toggle-btn" class="btn btn-sm">
+              Play / Pause SVS 5011 Video
+            </button>
+            <a href="#page-data-journey" class="btn btn-sm">
+              Trace the 9-Stage Data Pipeline ↓
+            </a>
+            <a href="#page-map-explorer" class="btn btn-sm btn-primary">
+              Jump to V2.2 Interactive Map ↓
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 4 — INTERACTIVE 9-STAGE DATA JOURNEY (#page-data-journey)
+         ====================================================================== -->
+    <section id="page-data-journey" class="page-section" aria-labelledby="journey-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 4 · NASA Satellite-to-Sound Pipeline</p>
+        <h2 id="journey-heading" class="section-title">Interactive 9-Stage Data Journey: From Orbital Photons to Audible Evidence</h2>
+        <p class="section-subtitle">
+          Trace how raw optical detections and 1-second spacecraft telemetry from the International Space Station are validated, paired, quality-filtered, and transformed into synchronized visual and acoustic states. Select any stage below to inspect its exact inputs, rules, and outputs.
+        </p>
+      </div>
+
+      <!-- 9-Stage Horizontal Interactive Stepper -->
+      <div id="pipeline-stepper-rail" class="pipeline-stepper-rail" role="tablist" aria-label="9-Stage NASA Satellite-to-Sound Pipeline">
+        <button type="button" class="pipeline-stage-pill active" data-stage-index="0" role="tab" aria-selected="true">
+          <span class="pipeline-stage-num">STAGE 01</span>
+          <span class="pipeline-stage-name">NASA ISS LIS Instrument</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="1" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 02</span>
+          <span class="pipeline-stage-name">Science V2.2 (DATA111)</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="2" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 03</span>
+          <span class="pipeline-stage-name">Backgrounds V2.2 (DATA211)</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="3" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 04</span>
+          <span class="pipeline-stage-name">QC Bitmasks &amp; TAI93→UTC</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="4" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 05</span>
+          <span class="pipeline-stage-name">Granule Pairing &amp; SAA</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="5" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 06</span>
+          <span class="pipeline-stage-name">Three-State Classification</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="6" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 07</span>
+          <span class="pipeline-stage-name">Visual Map &amp; Timeline</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="7" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 08</span>
+          <span class="pipeline-stage-name">Web Audio Sound Engine</span>
+        </button>
+        <button type="button" class="pipeline-stage-pill" data-stage-index="8" role="tab" aria-selected="false">
+          <span class="pipeline-stage-num">STAGE 09</span>
+          <span class="pipeline-stage-name">Evidence Inspector</span>
+        </button>
+      </div>
+
+      <!-- Active Stage Detail Inspector Card -->
+      <div class="pipeline-inspector-card" role="region" aria-live="polite" aria-labelledby="pipeline-stage-title">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+          <div>
+            <span id="pipeline-stage-badge" class="state-badge state-badge-observed">STAGE 01 OF 09 · ORBITAL HARDWARE</span>
+            <h3 id="pipeline-stage-title" style="margin: 0.45rem 0 0 0; font-size: 1.3rem;">
+              Stage 1: NASA ISS Lightning Imaging Sensor (LIS) Instrument
+            </h3>
+          </div>
+          <div style="display: flex; gap: var(--space-2); flex-wrap: wrap;">
+            <button type="button" id="pipeline-prev-btn" class="btn btn-sm">← Previous Stage</button>
+            <button type="button" id="pipeline-next-btn" class="btn btn-sm">Next Stage →</button>
+            <a href="#page-evidence-inspector" id="pipeline-evidence-btn" class="btn btn-sm btn-primary">
+              Inspect Live Stage Evidence ↓
+            </a>
+          </div>
+        </div>
+
+        <p id="pipeline-stage-summary" style="margin: 0; font-size: 0.94rem; color: var(--text-secondary);">
+          High-speed 128×128 pixel Charge-Coupled Device (CCD) optical imaging array aboard the International Space Station detecting narrow-band 777.4 nm atomic oxygen lightning emissions at ~2 ms frame intervals (~500 frames/s).
+        </p>
+
+        <div class="pipeline-detail-grid">
+          <div class="pipeline-aspect-box">
+            <p class="pipeline-aspect-label">1. Stage Input</p>
+            <p id="pipeline-input-box" style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              Optical cloud-top photon emissions at 777.4 nm + spacecraft GPS/attitude ephemeris at ~400 km altitude (51.6° inclination).
+            </p>
+          </div>
+          <div class="pipeline-aspect-box">
+            <p class="pipeline-aspect-label">2. Information Contained</p>
+            <p id="pipeline-info-box" style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              ~550 km × 550 km field of view (~4 km nadir pixel resolution), viewing any ground cell for ~80–95 s per orbit across [-55.75°, +55.25°] latitude.
+            </p>
+          </div>
+          <div class="pipeline-aspect-box">
+            <p class="pipeline-aspect-label">3. Processing Applied</p>
+            <p id="pipeline-proc-box" style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              Real-time background subtraction removes bright sunlit cloud tops to isolate millisecond optical lightning transients (~69% noon to ~88% night efficiency).
+            </p>
+          </div>
+          <div class="pipeline-aspect-box">
+            <p class="pipeline-aspect-label">4. Why It Matters Scientifically</p>
+            <p id="pipeline-why-box" style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              Because the camera moves at 7.66 km/s, it only observes a tiny fraction of Earth at any moment—establishing why unviewed areas must never be called "zero lightning."
+            </p>
+          </div>
+          <div class="pipeline-aspect-box">
+            <p class="pipeline-aspect-label">5. Output Produced</p>
+            <p id="pipeline-output-box" style="margin: 0; font-size: 0.85rem; color: var(--text-secondary);">
+              106 orbital granules of Level 2 Science (DATA111) and Level 1B Backgrounds (DATA211) during the final operational week (Nov 9–16, 2023).
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 5 — INTERACTIVE GLOBAL LIGHTNING EXPLORER (#page-map-explorer)
+         ====================================================================== -->
+    <section id="page-map-explorer" class="page-section" aria-labelledby="explorer-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 5 · Interactive Global &amp; Regional Workspace</p>
+        <h2 id="explorer-heading" class="section-title">Interactive Global ISS LIS Lightning &amp; Observation Explorer</h2>
+        <p class="section-subtitle">
+          Explore all <code>14,554</code> confirmed lightning flashes, <code>5,532</code> 0.5° × 0.5° observation grid polygons, and <code>864</code> <code>UNKNOWN</code> coverage features (SAA footprints, SAA cells, fatal outage tracks, and high-latitude unobserved reference cells).
+        </p>
+      </div>
+
+      <!-- Beginner Onboarding Callout Strip -->
+      <div class="onboarding-hint-strip" role="note" aria-label="How to use the Global Explorer">
+        <div>
+          <strong style="color: var(--accent-earth-blue);">How to Explore:</strong>
+          <span>1. Choose a <strong>Region</strong> &amp; <strong>Validated Time Window</strong> below → 2. Toggle between <strong>2D Map &amp; 3D Globe</strong> → 3. <strong>Click any flash ◆, grid cell ◎, or unknown zone ⊘</strong> on the map to inspect its exact NASA NetCDF record and hear its sound cue.</span>
+        </div>
+        <a href="#page-evidence-inspector" class="btn btn-sm">Jump to Inspected Record ↓</a>
+      </div>
+
+      <!-- Grouped Explorer Controls Bar -->
+      <div class="explorer-controls-bar" role="region" aria-label="Region and validated time-window selectors">
+        <div class="control-group">
+          <label for="region-preset-select" class="control-label">
+            <span>1. Explore Region</span>
+            <span class="mono" style="font-size: 0.74rem; color: var(--accent-earth-blue);">7 Validated Presets</span>
+          </label>
+          <select id="region-preset-select" class="select-input" aria-describedby="region-description-readout"></select>
+        </div>
+
+        <div class="control-group">
+          <label for="time-window-preset-select" class="control-label">
+            <span>2. Validated Time Window</span>
+            <span class="mono" style="font-size: 0.74rem; color: var(--accent-earth-blue);">Nov 9–16, 2023</span>
+          </label>
+          <select id="time-window-preset-select" class="select-input" aria-describedby="window-description-readout"></select>
+        </div>
+
+        <div class="control-group">
+          <label for="granule-quick-select" class="control-label">
+            <span>3. Advanced: Specific Orbit Granule (1–106)</span>
+            <span class="mono" style="font-size: 0.74rem; color: var(--text-muted);">Optional Override</span>
+          </label>
+          <select id="granule-quick-select" class="select-input">
+            <option value="">— Keep Selected Time-Window Preset —</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label">
+            <span>4. View &amp; Projection</span>
+            <span id="map-projection-label" class="mono" style="font-size: 0.74rem; color: var(--accent-earth-blue);">2D Equirectangular</span>
+          </span>
+          <div style="display: flex; gap: var(--space-2);">
+            <button type="button" id="toggle-projection-btn" class="btn btn-sm" style="flex: 1;">
+              Switch to 3D Globe View
+            </button>
+            <button type="button" id="reset-map-view-btn" class="btn btn-sm">
+              Reset View
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Selected Package Context Notice -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--space-3); margin-bottom: var(--space-4);">
+        <div class="analogy-card" style="padding: var(--space-3) var(--space-4);">
+          <strong style="font-size: 0.78rem; color: var(--accent-earth-blue); text-transform: uppercase;" class="mono">Active Region Context:</strong>
+          <p id="region-description-readout" style="margin: 0.25rem 0 0 0; font-size: 0.86rem; color: var(--text-secondary);"></p>
+        </div>
+        <div class="analogy-card" style="padding: var(--space-3) var(--space-4);">
+          <strong style="font-size: 0.78rem; color: var(--state-detected); text-transform: uppercase;" class="mono">Active Time-Window Context:</strong>
+          <p id="window-description-readout" style="margin: 0.25rem 0 0 0; font-size: 0.86rem; color: var(--text-secondary);"></p>
+        </div>
+      </div>
+
+      <div class="explorer-workspace-grid">
+        <!-- Map Canvas Card -->
+        <div class="map-card">
+          <div class="map-toolbar">
+            <div class="layer-toggles" role="group" aria-label="GeoJSON map layer toggles">
+              <label class="checkbox-pill">
+                <input type="checkbox" id="layer-toggle-flashes" checked />
+                <span class="mono" style="color: var(--state-detected);">◆</span>
+                <span>DETECTED Flashes (<span id="layer-count-flashes" class="mono">14,554</span>)</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="layer-toggle-grid" checked />
+                <span class="mono" style="color: var(--state-observed);">◎</span>
+                <span>0.5° Observation Grid (<span id="layer-count-grid" class="mono">5,532</span>)</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="layer-toggle-unknown" checked />
+                <span class="mono" style="color: var(--state-unknown);">⊘</span>
+                <span>UNKNOWN SAA &amp; Fatal (<span id="layer-count-unknown" class="mono">864</span>)</span>
+              </label>
+              <label class="checkbox-pill">
+                <input type="checkbox" id="layer-toggle-swath" checked />
+                <span>ISS Swath &amp; Cursor</span>
+              </label>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <button type="button" id="map-zoom-in-btn" class="btn btn-sm" aria-label="Zoom in on map">+</button>
+              <button type="button" id="map-zoom-out-btn" class="btn btn-sm" aria-label="Zoom out on map">−</button>
+            </div>
+          </div>
+
+          <div class="map-canvas-wrapper">
+            <canvas
+              id="global-lis-canvas"
+              width="1020"
+              height="510"
+              tabindex="0"
+              role="application"
+              aria-label="Interactive Global ISS LIS Lightning and Observation State Map. Use arrow keys to pan, plus or minus to zoom, or click any feature to inspect its NASA provenance."
+            ></canvas>
+
+            <div class="map-overlay-hud" aria-hidden="true">
+              <div>Package ID: <strong id="hud-package-id" class="mono">PKG_GLOBAL_LIS</strong></div>
+              <div>Cursor UTC: <strong id="hud-cursor-utc" class="mono">2023-11-09T22:52:12.400Z</strong></div>
+              <div>Render Mode: <span id="hud-render-stats" class="mono">Exact Points + Grid</span></div>
+            </div>
+
+            <!-- High-Latitude / Out-of-Coverage Warning Banner -->
+            <div id="map-out-of-coverage-banner" class="map-out-of-coverage-banner" hidden role="alert">
+              <div>
+                <strong>OUTSIDE ISS LIS OBSERVATION COVERAGE (<code>UNKNOWN</code>):</strong>
+                <span id="out-of-coverage-banner-text">
+                  Selected region lies poleward of the ±51.6° ISS orbit (~±54° max FOV reach; empirical viewtime bounds [-55.75°, +55.25°]). Zero viewtime passes exist here—never interpret as 0 flashes.
+                </span>
+              </div>
+              <span class="state-badge state-badge-unknown">⊘ OUTSIDE_OBSERVATION_COVERAGE</span>
+            </div>
+          </div>
+
+          <!-- Non-Colour-Only Map Legend & Attribution -->
+          <div class="map-legend-bar" aria-label="Three-State Scientific Map Legend">
+            <div class="legend-items">
+              <span class="legend-item">
+                <span class="state-badge state-badge-detected">◆ DETECTED</span>
+                <span>Confirmed Flash (<code>0x55 == 0</code>, Non-SAA)</span>
+              </span>
+              <span class="legend-item">
+                <span class="state-badge state-badge-observed">◎ OBSERVED_NO_DETECTION</span>
+                <span>Active Surveillance (<code>viewtime &gt; 0s</code>, 0 Flashes)</span>
+              </span>
+              <span class="legend-item">
+                <span class="state-badge state-badge-unknown">⊘ UNKNOWN</span>
+                <span>SAA Radiation / Fatal Outage / QC Gap / Out-of-Swath</span>
+              </span>
+              <span class="legend-item">
+                <span style="display:inline-block;width:14px;height:14px;border:1px dashed #64748B;background:repeating-linear-gradient(45deg,rgba(148,163,184,0.2),rgba(148,163,184,0.2) 3px,transparent 3px,transparent 6px);" aria-hidden="true"></span>
+                <span>Unobserved Polar Belt (<code>&gt; ±54°</code> No Data)</span>
+              </span>
+            </div>
+            <span class="mono" style="font-size: 0.74rem; color: var(--text-muted);">
+              GeoJSON: <code>06_PROCESSED_DATA/geojson/</code> · WGS84 (EPSG:4326)
+            </span>
+          </div>
+        </div>
+
+        <!-- Right Summary Telemetry Sidebar -->
+        <aside class="summary-sidebar" aria-label="Selected Region and Time Window Telemetry Summary">
+          <div class="metric-card">
+            <p class="metric-card-header">Current Cursor Observation Status</p>
+            <div style="margin: var(--space-2) 0;">
+              <span id="summary-current-state-badge" class="state-badge state-badge-observed">◎ OBSERVED_NO_DETECTION</span>
+            </div>
+            <p id="summary-current-reason-code" class="mono" style="margin: 0; font-size: 0.78rem; color: var(--accent-earth-blue);">
+              ACTIVE_OPTICAL_SURVEILLANCE_ZERO_FLASHES
+            </p>
+            <p id="summary-current-explanation" class="metric-subtext">
+              ISS LIS camera actively observing with healthy telemetry and zero flashes at cursor.
+            </p>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-card-header">Selected Window &amp; Cursor Time</p>
+            <p id="summary-cursor-utc" class="mono" style="font-size: 0.94rem; font-weight: 700; margin: 0; color: var(--text-primary);">
+              2023-11-09T22:52:12.400Z
+            </p>
+            <p class="metric-subtext mono">
+              TAI93: <span id="summary-cursor-tai93">973723942.4</span> s (UTC = TAI93 − 10.0s)
+            </p>
+            <p class="metric-subtext mono" style="margin-top: 0.35rem;">
+              Window: <span id="summary-window-range">2023-11-09 22:52Z → 2023-11-10 00:25Z</span>
+            </p>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-card-header">Confirmed Lightning Events in Selection</p>
+            <p id="summary-flash-count" class="metric-value-lg mono" style="color: var(--state-detected);">189</p>
+            <p class="metric-subtext">
+              Exact raw records preserved (0 dropped). Audited excluded flashes in window:
+              <strong id="summary-excluded-count" class="mono">0</strong>.
+            </p>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-card-header">Valid Observation Duration &amp; Coverage</p>
+            <p id="summary-valid-obs-duration" class="metric-value-lg mono" style="color: var(--state-observed);">5,572.0 s</p>
+            <p class="metric-subtext">
+              Clean 0.5° cell passes: <strong id="summary-clean-cell-passes" class="mono">39,858</strong>
+              (<span id="summary-detected-cell-passes" class="mono">82</span> <code>DETECTED</code> ·
+              <span id="summary-quiet-cell-passes" class="mono">39,776</span> <code>OBSERVED_NO_DETECTION</code>)
+            </p>
+          </div>
+
+          <div class="metric-card">
+            <p class="metric-card-header">Unavailable &amp; Invalid Data in Selection</p>
+            <p id="summary-unknown-summary" class="mono" style="font-size: 0.9rem; font-weight: 700; margin: 0; color: var(--state-unknown);">
+              0.0 s SAA · 0.0 s Fatal · 0.0 s QC Gap
+            </p>
+            <p id="summary-unknown-detail" class="metric-subtext">
+              SAA cell passes reclassified to <code>UNKNOWN</code>: <span id="summary-saa-cell-passes" class="mono">0</span>.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 6 — SYNCHRONIZED ORBITAL TIMELINE (#page-timeline-dashboard)
+         ====================================================================== -->
+    <section id="page-timeline-dashboard" class="page-section" aria-labelledby="timeline-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 6 · Synchronized Multi-Track Orbital Telemetry</p>
+        <h2 id="timeline-heading" class="section-title">Synchronized Orbital Timeline &amp; Three-State Dashboard</h2>
+        <p class="section-subtitle">
+          Driven by a single shared playback clock across the global map, timeline scrubber, listening modes, Web Audio synthesizer, and evidence inspector—preventing any drift between what you see and what you hear.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-status-header">
+          <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+            <button type="button" id="timeline-play-pause-btn" class="btn btn-primary btn-sm">
+              <span id="timeline-play-pause-label">Play Timeline</span>
+            </button>
+            <button type="button" id="timeline-stop-btn" class="btn btn-sm">Stop</button>
+            <button type="button" id="timeline-restart-btn" class="btn btn-sm">Restart Window</button>
+            <button type="button" id="timeline-step-back-60-btn" class="btn btn-sm" aria-label="Step backward 60 seconds">−60s</button>
+            <button type="button" id="timeline-step-back-btn" class="btn btn-sm" aria-label="Step backward 30 seconds">−30s</button>
+            <button type="button" id="timeline-step-back-10-btn" class="btn btn-sm" aria-label="Step backward 10 seconds">−10s</button>
+            <button type="button" id="timeline-step-fwd-10-btn" class="btn btn-sm" aria-label="Step forward 10 seconds">+10s</button>
+            <button type="button" id="timeline-step-fwd-btn" class="btn btn-sm" aria-label="Step forward 30 seconds">+30s</button>
+            <button type="button" id="timeline-step-fwd-60-btn" class="btn btn-sm" aria-label="Step forward 60 seconds">+60s</button>
+            <button type="button" id="timeline-next-flash-btn" class="btn btn-sm btn-gold">Jump to Next Flash ◆</button>
+            <button type="button" id="timeline-next-unknown-btn" class="btn btn-sm">Jump to Next UNKNOWN ⊘</button>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+            <span class="mono" style="font-size: 0.84rem;">
+              Active Orbit: <strong id="timeline-active-granule-label" style="color: var(--accent-earth-blue);">20231109_225212</strong>
+            </span>
+            <span id="timeline-state-pill" class="state-badge state-badge-observed">◎ OBSERVED_NO_DETECTION</span>
+          </div>
+        </div>
+
+        <!-- Synchronized 3-Track Canvas -->
+        <div class="timeline-canvas-container">
+          <canvas
+            id="synchronized-timeline-canvas"
+            width="1340"
+            height="195"
+            aria-label="Synchronized Three-Track Timeline showing Track 1 DETECTED flashes, Track 2 OBSERVED_NO_DETECTION orbital passes, and Track 3 UNKNOWN intervals (SAA, Fatal Outages, Nov 11 QC Gap)."
+          ></canvas>
+        </div>
+
+        <div class="timeline-scrubber-row">
+          <label for="timeline-scrubber-input" class="control-label mono" style="min-width: 145px;">
+            Playback Position:
+          </label>
+          <input
+            type="range"
+            id="timeline-scrubber-input"
+            class="timeline-range-slider"
+            min="0"
+            max="1000"
+            step="1"
+            value="0"
+            aria-label="Seek timeline position across active validated time window"
+          />
+          <span id="timeline-scrubber-utc-readout" class="mono" style="font-size: 0.85rem; min-width: 225px; text-align: right;">
+            2023-11-09T22:52:12.400Z
+          </span>
+        </div>
+
+        <!-- Decision 3 Effective Observation Duration Sensitivity Table & Sub-Second Swath-Edge Records -->
+        <details class="technical-details-drawer">
+          <summary>Decision 3 — Effective Observation Duration Sensitivity Comparison (<code>viewtime_effective_obs</code>) &amp; Sub-Second Perimeter Audit</summary>
+          <p style="margin: var(--space-2) 0; font-size: 0.86rem; color: var(--text-secondary);">
+            Per Task 4 Decision 3, the minimum positive observation duration in the NASA ISS LIS dataset is <code>0.040 s</code> (20 CCD frames at 500 Hz along the swath perimeter). Using the baseline rule <code>viewtime_effective_obs &gt; 0.0 s</code> preserves 100% of genuine swath-edge observations (including <code>56</code> sub-0.1s <code>DETECTED</code> flash passes and <code>124</code> sub-1.0s <code>DETECTED</code> flash passes) without arbitrarily downgrading valid perimeter passes to <code>UNKNOWN</code>:
+          </p>
+          <table class="data-table" aria-label="Effective observation duration sensitivity table">
+            <thead>
+              <tr>
+                <th scope="col">Threshold Rule</th>
+                <th scope="col">DETECTED Cell Passes</th>
+                <th scope="col">OBSERVED_NO_DETECTION Passes</th>
+                <th scope="col">SAA UNKNOWN Passes</th>
+                <th scope="col">Sub-Threshold Downgraded</th>
+                <th scope="col">Clean Swath Retention</th>
+              </tr>
+            </thead>
+            <tbody id="sensitivity-comparison-tbody">
+              <tr>
+                <td><strong>Baseline: <code>&gt; 0.0 s</code> (Selected)</strong></td>
+                <td>5,146</td>
+                <td>3,994,260</td>
+                <td>161,468</td>
+                <td>0</td>
+                <td>100.00%</td>
+              </tr>
+              <tr>
+                <td>Sensitivity A: <code>&gt; 0.1 s</code></td>
+                <td>5,090</td>
+                <td>3,650,686</td>
+                <td>161,468</td>
+                <td>343,630</td>
+                <td>91.41%</td>
+              </tr>
+              <tr>
+                <td>Sensitivity B: <code>&gt; 1.0 s</code></td>
+                <td>5,022</td>
+                <td>3,298,300</td>
+                <td>161,468</td>
+                <td>696,084</td>
+                <td>82.60%</td>
+              </tr>
+            </tbody>
+          </table>
+        </details>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 7 — LISTEN: TWO MODES & DYNAMIC SOUND ENGINE (#page-listening-modes / #page-sound-engine)
+         ====================================================================== -->
+    <section id="page-listening-modes" class="page-section" aria-labelledby="modes-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 7 · Comparative Acoustic Interpretation &amp; Web Audio API Synthesizer</p>
+        <h2 id="modes-heading" class="section-title">Listen: Two Listening Modes &amp; Real-Time Acoustic Observatory</h2>
+        <p class="section-subtitle">
+          Compare <strong><code>EVENT-ONLY</code></strong> against <strong><code>OBSERVATION-AWARE</code></strong> over the <strong>exact same selected NASA data package</strong>. Switching modes changes only the acoustic interpretation—never the selected region, time window, or NASA records.
+        </p>
+      </div>
+
+      <div class="modes-and-audio-grid">
+        <!-- Left Column: Two Listening Modes Panel -->
+        <div class="hero-card">
+          <div>
+            <h3 style="margin: 0 0 var(--space-2) 0;">Select Active Listening Mode</h3>
+            <p style="margin: 0 0 var(--space-3) 0; font-size: 0.86rem; color: var(--text-secondary);">
+              Both modes read identical records from shared package <code id="modes-shared-package-id">PKG_GLOBAL_LIS</code> (<strong id="modes-shared-flash-count" class="mono">189</strong> flashes).
+            </p>
+
+            <div class="mode-radiogroup" role="radiogroup" aria-label="Approved SonifyEarth Listening Modes">
+              <button
+                type="button"
+                id="mode-btn-event-only"
+                class="mode-option-card"
+                role="radio"
+                aria-checked="false"
+                data-mode="EVENT-ONLY"
+              >
+                <div class="mode-option-title">
+                  <span>MODE 1: EVENT-ONLY</span>
+                  <span class="mono" style="font-size: 0.75rem; color: var(--state-detected);">Pulses Only</span>
+                </div>
+                <p style="margin: 0; font-size: 0.83rem; color: var(--text-secondary);">
+                  Only confirmed <code>DETECTED</code> lightning flashes generate short percussive pulses at their validated timestamps. Visual badges &amp; the Evidence Inspector still explicitly separate <code>OBSERVED_NO_DETECTION</code> from <code>UNKNOWN</code> so missing coverage is never represented as zero lightning.
+                </p>
+              </button>
+
+              <button
+                type="button"
+                id="mode-btn-observation-aware"
+                class="mode-option-card"
+                role="radio"
+                aria-checked="true"
+                data-mode="OBSERVATION-AWARE"
+              >
+                <div class="mode-option-title">
+                  <span>MODE 2: OBSERVATION-AWARE</span>
+                  <span class="mono" style="font-size: 0.75rem; color: var(--accent-earth-blue);">All 3 States</span>
+                </div>
+                <p style="margin: 0; font-size: 0.83rem; color: var(--text-secondary);">
+                  Sonifies all three scientific states: <code>DETECTED</code> → short percussive pulse; <code>OBSERVED_NO_DETECTION</code> → clearly audible sustained observation texture; <code>UNKNOWN</code> → distinct neutral two-part cue (528 Hz → 396 Hz) + visible reason label.
+                </p>
+              </button>
+            </div>
+          </div>
+
+          <!-- High-Density Compression & Acoustic Honesty Policy -->
+          <div class="analogy-card" style="padding: var(--space-3) var(--space-4);">
+            <h4 style="margin: 0 0 0.25rem 0; font-size: 0.84rem; color: var(--state-detected);" class="mono">
+              High-Density Flash Rate Limiter &amp; Uniform Gain Policy
+            </h4>
+            <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+              When orbital flash rates exceed <code>25 flashes/s</code>, acoustic triggers cap at <code>18 pulses/s</code> while preserving the exact uncompressed flash count on screen. All flash pulses play at uniform gain so cloud-top optical radiance (<code>uJ/sr/m2/um</code>) is never misinterpreted as storm destructiveness.
+            </p>
+          </div>
+
+          <!-- Compatibility Adapter Provenance Box (Section 5 requirement) -->
+          <div class="lineage-notice">
+            <h4 style="margin: 0 0 0.25rem 0; font-size: 0.84rem; color: var(--text-primary);">
+              Frontend Listening-Mode Compatibility Adapter (Section 5 Resolution)
+            </h4>
+            <p style="margin: 0; font-size: 0.8rem;">
+              Untouched Task 4 files (<code>processing_config.json</code> &amp; <code>sonifyearth_windows.json</code>) contain workflow identifiers <code id="compat-raw-identifiers">["EVIDENCE_INSPECTOR_MODE", "GLOBAL_ORBITAL_PLAYBACK_MODE"]</code>. The frontend compatibility adapter resolves these strictly to the two approved product listening modes (<strong><code>EVENT-ONLY</code></strong> and <strong><code>OBSERVATION-AWARE</code></strong>) while keeping the <em>Why Did I Hear That?</em> Evidence Inspector active across both modes without modifying Task 4 outputs.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Column: Dynamic Sound Engine Console & Live Acoustic Visualizer -->
+        <div id="page-sound-engine" class="hero-card" style="scroll-margin-top: 96px;">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3);">
+              <h3 style="margin: 0;">Browser-Native Web Audio API Engine</h3>
+              <span class="state-badge state-badge-observed">
+                Active Mode: <span id="audio-console-mode-readout">OBSERVATION-AWARE</span>
+              </span>
+            </div>
+
+            <!-- Live Synchronized Acoustic Visualizer Canvas -->
+            <div class="sound-visualizer-wrap">
+              <canvas
+                id="sound-visualizer-canvas"
+                width="640"
+                height="120"
+                role="img"
+                aria-label="Real-time acoustic state visualizer displaying percussive pulses for DETECTED flashes, harmonic wave texture for OBSERVED_NO_DETECTION, and two-part chime envelope for UNKNOWN intervals."
+              ></canvas>
+            </div>
+
+            <!-- Transport Controls -->
+            <div class="transport-toolbar" role="group" aria-label="Web Audio API playback controls">
+              <button type="button" id="audio-play-btn" class="btn btn-primary btn-sm">Play</button>
+              <button type="button" id="audio-pause-btn" class="btn btn-sm">Pause</button>
+              <button type="button" id="audio-stop-btn" class="btn btn-sm">Stop</button>
+              <button type="button" id="audio-restart-btn" class="btn btn-sm">Restart</button>
+              <button type="button" id="audio-mute-btn" class="btn btn-sm" aria-pressed="false">Mute</button>
+
+              <div style="display: flex; align-items: center; gap: 0.4rem; margin-left: auto;">
+                <label for="audio-volume-slider" class="mono" style="font-size: 0.76rem;">Gain:</label>
+                <input
+                  type="range"
+                  id="audio-volume-slider"
+                  min="0"
+                  max="100"
+                  value="75"
+                  style="width: 86px; accent-color: var(--accent-earth-blue);"
+                  aria-label="Master audio volume percentage"
+                />
+                <span id="audio-volume-label" class="mono" style="font-size: 0.76rem; min-width: 34px;">75%</span>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <label for="playback-speed-select" class="mono" style="font-size: 0.76rem;">Speed:</label>
+                <select id="playback-speed-select" class="select-input" style="min-height: 36px; padding: 0.25rem 0.5rem; font-size: 0.78rem; width: auto;">
+                  <option value="1">1× (Real-Time)</option>
+                  <option value="10">10× Orbital</option>
+                  <option value="60" selected>60× (1 min/sec)</option>
+                  <option value="300">300× (5 min/sec)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Sound Legend with Direct Audition Buttons -->
+            <div class="sound-legend-grid" role="region" aria-label="Approved Three-State Sound Legend">
+              <div class="sound-legend-card">
+                <div>
+                  <span class="state-badge state-badge-detected">◆ DETECTED</span>
+                  <h4 style="margin: 0.4rem 0 0.2rem 0; font-size: 0.86rem;">Short Percussive Pulse</h4>
+                  <p style="margin: 0; font-size: 0.76rem; color: var(--text-secondary);">
+                    65 ms 880→440 Hz optical transient at validated flash UTC. Uniform gain (never scaled by radiance).
+                  </p>
+                </div>
+                <button type="button" id="audition-detected-btn" class="btn btn-sm">
+                  Audition Pulse ◆
+                </button>
+              </div>
+
+              <div class="sound-legend-card">
+                <div>
+                  <span class="state-badge state-badge-observed">◎ OBSERVED_NO_DETECTION</span>
+                  <h4 style="margin: 0.4rem 0 0.2rem 0; font-size: 0.86rem;">Sustained Observation Texture</h4>
+                  <p style="margin: 0; font-size: 0.76rem; color: var(--text-secondary);">
+                    220/330 Hz harmonic bed + 360 Hz band-passed sensor noise during verified quiet surveillance.
+                  </p>
+                </div>
+                <button type="button" id="audition-observed-btn" class="btn btn-sm">
+                  Audition Texture ◎
+                </button>
+              </div>
+
+              <div class="sound-legend-card">
+                <div>
+                  <span class="state-badge state-badge-unknown">⊘ UNKNOWN</span>
+                  <h4 style="margin: 0.4rem 0 0.2rem 0; font-size: 0.86rem;">Distinct Neutral Two-Part Cue</h4>
+                  <p style="margin: 0; font-size: 0.76rem; color: var(--text-secondary);">
+                    528 Hz → 396 Hz two-part chime for SAA radiation, fatal flags, Nov 11 QC gap, or out-of-swath.
+                  </p>
+                </div>
+                <button type="button" id="audition-unknown-btn" class="btn btn-sm">
+                  Audition Two-Part Cue ⊘
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Synchronous Real-Time Text Equivalents / Audio Transcript -->
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; gap: 0.4rem;">
+              <strong style="font-size: 0.8rem;" class="mono">Synchronous Audio Transcript &amp; Scheduler Diagnostics</strong>
+              <span id="audio-diagnostics-readout" class="mono" style="font-size: 0.74rem; color: var(--text-muted);">
+                Pulses: 0 | Textures: 0 | Unknown Cues: 0 | Active Nodes: 0
+              </span>
+            </div>
+            <div id="audio-transcript-log" class="audio-transcript-box" role="log" aria-live="polite" aria-label="Synchronous text equivalents for triggered sound cues">
+              <div class="transcript-entry">
+                <span class="mono" style="color: var(--accent-earth-blue);">[READY]</span>
+                <span>No autoplay occurred on load. Click Play, scrub the timeline, or audition a cue above.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 8 — "WHY DID I HEAR THAT?" EVIDENCE INSPECTOR (#page-evidence-inspector)
+         ====================================================================== -->
+    <section id="page-evidence-inspector" class="page-section" aria-labelledby="inspector-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 8 · Record-Level Scientific Traceability</p>
+        <h2 id="inspector-heading" class="section-title">“Why Did I Hear That?” — NASA Evidence Inspector</h2>
+        <p class="section-subtitle">
+          Every sound cue, flash marker, grid cell, and timeline interval traces directly to an unaltered NASA NetCDF-4 record in <code>01_NASA_RAW_DATA/</code>. Read the <strong>Level 1 Human-Readable Explanation</strong> first, then expand <strong>Level 2 Technical NASA Metadata</strong>.
+        </p>
+      </div>
+
+      <div class="inspector-grid">
+        <!-- Left Column: 6 Pre-Verified Anchor Cases from REAL_STATE_EXAMPLES.json + Custom Coordinate Lookup -->
+        <div class="hero-card" style="padding: var(--space-4);">
+          <div>
+            <h3 style="margin: 0 0 var(--space-2) 0; font-size: 0.98rem;">
+              6 Verified Benchmark Cases (<code>REAL_STATE_EXAMPLES.json</code>)
+            </h3>
+            <p style="margin: 0 0 var(--space-3) 0; font-size: 0.8rem; color: var(--text-secondary);">
+              Select any pre-verified benchmark record below (or click any point/cell on the map &amp; timeline) to inspect its provenance and audition its sound cue:
+            </p>
+            <div id="inspector-presets-container" class="preset-list" role="group" aria-label="Verified NASA state example presets"></div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: var(--space-3);">
+            <h4 style="margin: 0 0 var(--space-2) 0; font-size: 0.88rem;">Inspect Any Coordinate at Cursor Time</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); margin-bottom: var(--space-2);">
+              <div>
+                <label for="custom-inspect-lat" class="control-label">Latitude (°N)</label>
+                <input type="number" id="custom-inspect-lat" class="number-input mono" value="-6.33" min="-90" max="90" step="0.25" />
+              </div>
+              <div>
+                <label for="custom-inspect-lon" class="control-label">Longitude (°E)</label>
+                <input type="number" id="custom-inspect-lon" class="number-input mono" value="-72.28" min="-180" max="180" step="0.25" />
+              </div>
+            </div>
+            <button type="button" id="custom-inspect-btn" class="btn btn-sm" style="width: 100%;">
+              Inspect Coordinate &amp; Play State Cue
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Column: Active Evidence Inspector Display (Level 1 Human-Readable + Level 2 Technical Metadata) -->
+        <div class="inspector-detail-card" role="region" aria-live="polite" aria-labelledby="inspector-record-title">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap;">
+            <div>
+              <span id="inspector-state-badge" class="state-badge state-badge-detected">◆ DETECTED</span>
+              <span id="inspector-reason-badge" class="mono" style="margin-left: var(--space-2); font-size: 0.8rem; color: var(--accent-earth-blue);">
+                CONFIRMED_LIGHTNING_FLASH
+              </span>
+            </div>
+            <button type="button" id="inspector-audition-current-btn" class="btn btn-sm btn-primary">
+              Hear This Record’s Sound Cue ♪
+            </button>
+          </div>
+
+          <h3 id="inspector-record-title" style="margin: 0; font-size: 1.25rem;">
+            Confirmed Lightning Flash (ISS_LIS_V2.2_20231109_225212_F000000)
+          </h3>
+
+          <!-- Level 1: Everyday-Language Explanation First -->
+          <div class="everyday-explanation-panel">
+            <h4 style="margin: 0 0 0.35rem 0; font-size: 0.86rem; color: var(--accent-earth-blue); text-transform: uppercase;" class="mono">
+              Level 1 — In Everyday Language: Why Did You Hear That?
+            </h4>
+            <p id="inspector-everyday-explanation" style="margin: 0 0 var(--space-2) 0; font-size: 0.96rem;">
+              Loading verified explanation…
+            </p>
+            <p id="inspector-cue-explanation" style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);"></p>
+          </div>
+
+          <!-- Key Summary Readouts (Always Visible) -->
+          <div id="inspector-quick-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(205px, 1fr)); gap: var(--space-3);"></div>
+
+          <!-- Level 2: Expandable Technical Metadata Section -->
+          <details id="inspector-technical-details" class="technical-details-drawer" open>
+            <summary>Level 2 — Expandable Technical NASA Metadata &amp; Bit-Level Provenance</summary>
+            <table class="data-table" aria-label="Traceable NASA technical metadata">
+              <tbody id="inspector-metadata-tbody"></tbody>
+            </table>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         SECTION 9 — DATA, ARCHIVE, METHODOLOGY & VALIDATION VAULT (#page-methodology)
+         ====================================================================== -->
+    <section id="page-methodology" class="page-section" aria-labelledby="methodology-heading">
+      <div class="section-header">
+        <p class="section-eyebrow">Section 9 · Complete Scientific Archive, Provenance, DOIs &amp; Validation Vault</p>
+        <h2 id="methodology-heading" class="section-title">Data, Archive Census, Quality Control, Validation Reports &amp; Downloads</h2>
+        <p class="section-subtitle">
+          <strong>Historical NASA data, not a live lightning feed.</strong> All visual and acoustic outputs in SonifyEarth are derived deterministically from the <code>106</code> paired NASA GHRC DAAC ISS LIS V2.2 Science and Backgrounds granules spanning November 9–16, 2023. Explore all 7 archive tabs below.
+        </p>
+      </div>
+
+      <!-- 7-Tab Navigation Bar -->
+      <div class="archive-tabs-bar" role="tablist" aria-label="Scientific Archive and Methodology Tabs">
+        <button type="button" class="archive-tab-btn active" data-archive-tab="tab-catalog" role="tab" aria-selected="true">
+          1. NASA Datasets &amp; 106-Granule Catalog
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-coverage" role="tab" aria-selected="false">
+          2. Archive Coverage &amp; Nov 11 QC Gap
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-statistics" role="tab" aria-selected="false">
+          3. Complete Archive Statistics
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-qc-exclusions" role="tab" aria-selected="false">
+          4. Quality Control &amp; Exclusions (1,570)
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-methodology-rules" role="tab" aria-selected="false">
+          5. Methodology &amp; Limitations
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-reports" role="tab" aria-selected="false">
+          6. Validation Reports Reader
+        </button>
+        <button type="button" class="archive-tab-btn" data-archive-tab="tab-downloads" role="tab" aria-selected="false">
+          7. Downloads &amp; Provenance
+        </button>
+      </div>
+
+      <!-- TAB 1: NASA DATASETS & 106-GRANULE CATALOG -->
+      <div id="tab-catalog" class="archive-tab-panel active" role="tabpanel">
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--accent-earth-blue);">Official NASA Datasets &amp; DOIs</h3>
+            <ul style="padding-left: 1.2rem; font-size: 0.86rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>
+                <strong>ISS LIS Science Data V2.2 (<code>DATA111</code>):</strong> Collection <code>ISS_LIS_SC_V2.2</code>, Processing Level 2, Final QC (<code>FIN</code>), <code>106</code> NetCDF-4 (<code>.nc</code>) + <code>106</code> HDF-4 (<code>.hdf</code>) files. DOI: <a href="https://doi.org/10.5067/LIS/ISSLIS/DATA111" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--accent-earth-blue);">10.5067/LIS/ISSLIS/DATA111</a>
+              </li>
+              <li>
+                <strong>ISS LIS Backgrounds Data V2.2 (<code>DATA211</code>):</strong> Collection <code>ISS_LIS_BG_V2.2</code>, Processing Level 1B, Final QC (<code>FIN</code>), <code>106</code> NetCDF-4 (<code>.nc</code>) + <code>106</code> HDF-4 (<code>.hdf</code>) files. DOI: <a href="https://doi.org/10.5067/LIS/ISSLIS/DATA211" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--accent-earth-blue);">10.5067/LIS/ISSLIS/DATA211</a>
+              </li>
+              <li>
+                <strong>Task 2.1 Audit Variable Placement Correction:</strong> The <code>0.5° × 0.5°</code> gridded observation duration arrays (<code>viewtime_lat</code>, <code>viewtime_lon</code>, <code>viewtime_start</code>, <code>viewtime_end</code>, <code>viewtime_effective_obs</code>, <code>viewtime_alert_flag</code>) reside in <strong>Science V2.2 (<code>DATA111</code>)</strong>, whereas <strong>Backgrounds V2.2 (<code>DATA211</code>)</strong> provides 1-second platform attitude/alert vectors (<code>bg_info_*</code>) and 128×128 raw radiant scenes (<code>bg_data_*</code>).
+              </li>
+            </ul>
+          </article>
+
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-detected);">Browse All 106 Paired NASA Orbit Granules</h3>
+            <p style="margin: 0 0 var(--space-2) 0; font-size: 0.84rem; color: var(--text-secondary);">
+              Every Science file matches its corresponding Backgrounds file <code>100% (106 / 106)</code> on timestamp, orbit number, and TAI93 bounds (<code>GRANULE_MATCHING_REPORT.md</code>). Filter or load any orbit onto the interactive map below:
+            </p>
+            <div style="display: flex; gap: var(--space-2); align-items: center;">
+              <label for="granule-catalog-filter" class="sr-only">Filter 106 granules by ID or orbit</label>
+              <input type="text" id="granule-catalog-filter" class="text-input mono" placeholder="Filter by granule ID (e.g. 20231111 or 20231116_172457)…" />
+              <span id="granule-catalog-count-label" class="mono" style="font-size: 0.78rem; color: var(--accent-earth-blue); white-space: nowrap;">106 / 106 Orbits</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="scroll-table-container">
+          <table class="data-table" aria-label="106 paired NASA ISS LIS Science and Backgrounds granules">
+            <thead>
+              <tr>
+                <th scope="col">Pair #</th>
+                <th scope="col">Granule ID</th>
+                <th scope="col">UTC Start → Actual Telemetry End</th>
+                <th scope="col">Confirmed Flashes</th>
+                <th scope="col">Excluded Flashes</th>
+                <th scope="col">Viewtime Cells</th>
+                <th scope="col">SAA Sec</th>
+                <th scope="col">Fatal Sec</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody id="granule-catalog-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: ARCHIVE COVERAGE & NOV 11 QC GAP -->
+      <div id="tab-coverage" class="archive-tab-panel" role="tabpanel">
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--accent-earth-blue);">Seven-Day Final Operational Window (Nov 9–16, 2023)</h3>
+            <ul style="padding-left: 1.2rem; font-size: 0.86rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>
+                <strong>Archive Start (Orbit #1):</strong> <code>2023-11-09T22:52:12.400000Z</code> (<code>TAI93 = 973723942.4 s</code>, <code>ISS_LIS_SC_V2.2_20231109_225212_FIN.nc</code>).
+              </li>
+              <li>
+                <strong>Actual Valid Telemetry End (Orbit #106):</strong> <code>2023-11-16T21:17:00.000000Z</code> (<code>TAI93 = 974323030.0 s</code>).
+              </li>
+              <li>
+                <strong>Nominal Final Granule Header End:</strong> <code>2023-11-16T22:03:35.200000Z</code> (<code>TAI93 = 974325825.2 s</code>). During the final <code>2,795.2 s</code> of Orbit #106 (<code>20231116_203037_FIN.nc</code>), the instrument was commanded into permanent power-down for spacecraft decommissioning (<code>lis_anomalies.pdf</code> p. 95).
+              </li>
+              <li>
+                <strong>Inter-Granule Continuity:</strong> Out of <code>105</code> consecutive granule transitions, <code>104</code> are continuous orbit handoffs separated by <code>0.0 s to 0.8 s</code>.
+              </li>
+            </ul>
+          </article>
+
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-unknown);">The November 11, 2023 NASA QC Deleted-Orbit Gap (5,519.2 s)</h3>
+            <p style="margin: 0 0 var(--space-3) 0; font-size: 0.86rem; color: var(--text-secondary);">
+              Between Pair #23 (<code>ISS_LIS_SC_V2.2_20231111_072716_FIN.nc</code>, ending <code>2023-11-11T08:59:55.800000Z</code>) and Pair #24 (<code>ISS_LIS_SC_V2.2_20231111_103235_FIN.nc</code>, starting <code>2023-11-11T10:31:55.000000Z</code>), there is a <strong><code>5,519.2 s</code> (<code>91.99 min</code>, ~1 full ISS orbit)</strong> missing granule interval (<code>TAI93 973846805.8 → 973852325.0</code>).
+            </p>
+            <div class="lineage-notice">
+              <strong>Official NASA Provenance:</strong> Per <code>science_v2_guide.pdf</code>, NASA GHRC quality control withholds single orbit granules that fail post-pass telemetry/ephemeris convergence checks. SonifyEarth classifies this entire <code>5,519.2 s</code> window as <code>UNKNOWN</code> with reason code <code>MISSING_SOURCE_DATA</code> and plays the neutral two-part cue (528 Hz → 396 Hz).
+            </div>
+            <div style="margin-top: var(--space-3);">
+              <button type="button" id="jump-nov11-gap-btn" class="btn btn-sm btn-primary">
+                Load Nov 11 NASA QC Gap on Map &amp; Timeline ↑
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- TAB 3: COMPLETE ARCHIVE STATISTICS & SOURCE RECONCILIATION -->
+      <div id="tab-statistics" class="archive-tab-panel" role="tabpanel">
+        <div class="methodology-card">
+          <h3 style="margin-top: 0; color: var(--accent-earth-blue);">Complete Reconciled NASA ISS LIS V2.2 Archive Census (100% Accounting)</h3>
+          <p style="margin: 0 0 var(--space-3) 0; font-size: 0.86rem; color: var(--text-secondary);">
+            Every record across all <code>106</code> Science V2.2 and <code>106</code> Backgrounds V2.2 NetCDF-4 files is reconciled without silent drops:
+          </p>
+          <table class="data-table" aria-label="Complete NASA ISS LIS V2.2 archive statistics">
+            <thead>
+              <tr>
+                <th scope="col">Metric / Record Category</th>
+                <th scope="col">Exact Verified Value</th>
+                <th scope="col">Scientific Breakdown &amp; Source Reconciliation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Paired NASA Granules</strong></td>
+                <td class="mono">106 Science + 106 Backgrounds</td>
+                <td>424 raw files total in <code>01_NASA_RAW_DATA/</code> (106 <code>.nc</code> + 106 <code>.hdf</code> Science; 106 <code>.nc</code> + 106 <code>.hdf</code> Backgrounds)</td>
+              </tr>
+              <tr>
+                <td><strong>Raw Lightning Flashes</strong></td>
+                <td class="mono">16,124</td>
+                <td><code>14,554</code> confirmed <code>DETECTED</code> (<code>90.263%</code>) + <code>1,570</code> audited exclusions (<code>9.737%</code>) = <code>16,124</code> (100.00% reconciled)</td>
+              </tr>
+              <tr>
+                <td><strong>Flash Hierarchy Totals</strong></td>
+                <td class="mono">549,106 Events → 144,611 Groups → 16,124 Flashes → 2,469 Areas</td>
+                <td>100% contiguous parent-child index integrity across all 85 active flash granules (<code>21</code> granules had <code>0</code> raw flashes)</td>
+              </tr>
+              <tr>
+                <td><strong>Total 0.5° Viewtime Cell Passes</strong></td>
+                <td class="mono">4,160,874</td>
+                <td><code>3,999,406</code> clean non-SAA passes (<code>5,146</code> <code>DETECTED</code> + <code>3,994,260</code> <code>OBSERVED_NO_DETECTION</code> at baseline <code>&gt; 0.0 s</code>) + <code>161,468</code> SAA-overlapping passes reclassified to <code>UNKNOWN</code></td>
+              </tr>
+              <tr>
+                <td><strong>Global 0.5° × 0.5° Spatial Grid Census</strong></td>
+                <td class="mono">160,560 Observed / 98,640 Unviewed</td>
+                <td>Out of <code>259,200</code> global 0.5° cells (<code>360 × 720</code>), <code>160,560</code> within <code>[-55.75°, +55.25°]</code> were viewed; <code>98,640</code> polar cells had <code>0</code> passes (<code>OUTSIDE_OBSERVATION_COVERAGE</code>)</td>
+              </tr>
+              <tr>
+                <td><strong>1-Second Telemetry Records</strong></td>
+                <td class="mono">587,941 Seconds</td>
+                <td>Identical count in Science <code>one_second_count</code> and Backgrounds <code>bg_info_count</code>; plus <code>10,660</code> 128×128 background scenes</td>
+              </tr>
+              <tr>
+                <td><strong>GeoJSON Production Layers</strong></td>
+                <td class="mono">14,554 Points · 5,532 Grid Cells · 864 UNKNOWN Features</td>
+                <td>Grid polygons: <code>2,927</code> <code>DETECTED</code> cells + <code>2,605</code> sampled <code>OBSERVED_NO_DETECTION</code> cells. UNKNOWN features: <code>624</code> SAA cells + <code>228</code> SAA swath footprints + <code>11</code> fatal outage tracks + <code>1</code> polar reference cell</td>
+              </tr>
+              <tr>
+                <td><strong>Orbital Timeline &amp; Swath Keyframes</strong></td>
+                <td class="mono">107 Windows · 2,350 Swath Keyframes</td>
+                <td><code>106</code> orbital pass windows + <code>1</code> Nov 11 QC gap window; <code>2,350</code> swath keyframes in <code>sonifyearth_windows.json</code> (<code>228</code> SAA-active + <code>2,122</code> nominal; note: an earlier narrative report text cited <code>2,213</code> while the actual generated JSON contains <code>2,350</code> keyframes)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: QUALITY CONTROL & EXCLUSIONS EXPLORER -->
+      <div id="tab-qc-exclusions" class="archive-tab-panel" role="tabpanel">
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-detected);">Bitmask Quality Control (0x55 Fatal vs. 0xAA Warning)</h3>
+            <ul style="padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>
+                <strong>Fatal Odd-Bit Mask (<code>0x55 = 0b01010101</code>):</strong> Bit 0 (<code>0x01</code> instrument fatal), Bit 2 (<code>0x04</code> platform fatal), Bit 4 (<code>0x10</code> external fatal), Bit 6 (<code>0x40</code> processing fatal). Any record with <code>(alert_flag &amp; 0x55) != 0</code> is excluded from <code>DETECTED</code>/<code>OBSERVED_NO_DETECTION</code> and classified <code>UNKNOWN (FATAL_QUALITY_FLAG)</code>.
+              </li>
+              <li>
+                <strong>Warning Even-Bit Mask (<code>0xAA = 0b10101010</code>):</strong> Informational warnings only. Records with <code>(alert_flag &amp; 0x55) == 0</code> remain scientifically valid.
+              </li>
+              <li>
+                <strong>105 Fatal-Flagged Raw Flashes (Class 1 vs. Contiguous):</strong> Out of <code>16,124</code> raw flashes, <code>105</code> carry fatal flags (<code>84</code> fatal-only outside SAA + <code>21</code> fatal+SAA). Exactly <strong><code>100</code> of these <code>105</code></strong> occur during isolated 1-second framing/bit-toggle events (Class 1 anomaly), while <strong><code>5</code></strong> occur inside multi-minute contiguous fatal telemetry outages (Class 2 anomaly).
+              </li>
+              <li>
+                <strong>10 Contiguous Fatal Outage Windows (8,232 s Total):</strong> Includes 9 platform/instrument outage runs across 9 granules plus the major <strong><code>4,818.0 s</code> (80.3 min)</strong> outage in <code>ISS_LIS_SC_V2.2_20231116_172457_FIN.nc</code>.
+              </li>
+            </ul>
+          </article>
+
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-unknown);">Conservative SAA Radiation Policy &amp; Boundary-Cell Audit</h3>
+            <ul style="padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>
+                <strong>47 SAA Windows Across 44 Orbits (18,571 s Total):</strong> Identified via <code>(bg_info_external_alert &amp; 0x03) != 0</code> where trapped inner Van Allen belt protons strike the CCD over South America and the South Atlantic.
+              </li>
+              <li>
+                <strong>1,570 Excluded Flashes Reconciliation:</strong>
+                <code>1,465</code> non-fatal flashes inside 1s SAA + <code>21</code> fatal+SAA flashes (<code>1,486</code> total SAA-overlapping flashes) + <code>84</code> fatal-only non-SAA flashes + <code>0</code> solar glint violations = <strong><code>1,570</code> total excluded flashes</strong> in <code>excluded_records_audit.json</code>.
+              </li>
+              <li>
+                <strong>71 Confirmed Boundary-Cell Flashes (17 Grid Cells):</strong> Exactly <code>71</code> confirmed <code>DETECTED</code> flashes occurred at clean 1-second timestamps outside the SAA (<code>saa_1s == 0</code>), but inside <code>17</code> <code>0.5° × 0.5°</code> grid cells whose ~85 s cumulative <code>viewtime</code> window later entered or earlier exited the SAA boundary.
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="methodology-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-2);">
+            <h3 style="margin: 0; font-size: 1.05rem;">Interactive Excluded Flashes Audit Sample (<code>excluded_records_audit.json</code> · 1,570 Total)</h3>
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <label for="excluded-reason-filter" class="mono" style="font-size: 0.78rem;">Filter Reason:</label>
+              <select id="excluded-reason-filter" class="select-input" style="width: auto; min-height: 36px; padding: 0.25rem 0.6rem; font-size: 0.8rem;">
+                <option value="ALL">All Excluded Flashes (1,570)</option>
+                <option value="INSUFFICIENT_EVIDENCE_SAA_RADIATION">SAA Radiation Only (1,465)</option>
+                <option value="FATAL_QUALITY_FLAG">Fatal Quality Flag (105: 84 Fatal-Only + 21 Fatal+SAA)</option>
+              </select>
+            </div>
+          </div>
+          <div class="scroll-table-container" style="max-height: 310px;">
+            <table class="data-table" aria-label="Audited excluded flashes from excluded_records_audit.json">
+              <thead>
+                <tr>
+                  <th scope="col">Excluded Flash ID</th>
+                  <th scope="col">Granule ID</th>
+                  <th scope="col">UTC Timestamp</th>
+                  <th scope="col">Coordinates</th>
+                  <th scope="col">Alert Flag</th>
+                  <th scope="col">SAA 1s</th>
+                  <th scope="col">Reason Code</th>
+                  <th scope="col">Inspect</th>
+                </tr>
+              </thead>
+              <tbody id="excluded-audit-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 5: METHODOLOGY & LIMITATIONS -->
+      <div id="tab-methodology-rules" class="archive-tab-panel" role="tabpanel">
+        <div class="methodology-grid">
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--accent-earth-blue);">1. Leap-Second-Aware TAI93 to UTC Conversion</h3>
+            <p style="font-size: 0.86rem; color: var(--text-secondary);">
+              NASA ISS LIS timestamps are elapsed International Atomic Time (TAI) seconds since <code>1993-01-01T00:00:00Z</code> (when <code>TAI − UTC = 27.0 s</code>). Between January 1993 and November 2023 (when <code>TAI − UTC = 37.0 s</code>, last leap second added <code>2016-12-31</code>), <strong><code>10.0</code> leap seconds</strong> accumulated:
+            </p>
+            <p class="mono" style="background: var(--bg-surface-1); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-strong); font-size: 0.82rem; color: var(--state-detected);">
+              UTC = Epoch(1993-01-01T00:00:00Z) + (TAI93 − 10.0 s)
+            </p>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 0;">
+              Validated across all <code>106</code> Science and Backgrounds granules against official NASA ISO-8601 global attributes with <strong><code>0.000000 s</code> discrepancy</strong> (<code>TAI93_UTC_VALIDATION_REPORT.md</code>).
+            </p>
+          </article>
+
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-detected);">2. Spatial Point-in-Cell Floor Matching</h3>
+            <p style="font-size: 0.86rem; color: var(--text-secondary);">
+              NASA ISS LIS <code>viewtime</code> grid centers sit at half-degree midpoints (<code>-89.75° … +89.75°</code> lat, <code>-179.75° … +179.75°</code> lon). Mapping flash coordinates via standard floor binning:
+            </p>
+            <p class="mono" style="background: var(--bg-surface-1); padding: 0.6rem; border-radius: 6px; border: 1px solid var(--border-strong); font-size: 0.8rem; color: var(--accent-earth-blue);">
+              cell_center = floor(coord × 2) / 2 + 0.25°
+            </p>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 0;">
+              Matches <strong><code>100.00%</code> (<code>16,124 / 16,124</code>)</strong> of flashes within <code>&lt;= 0.5°</code> of an active viewtime cell in the same granule (`99.78%` exact point-in-cell + `0.22%` [36 flashes] adjacent optical footprint spillover).
+            </p>
+          </article>
+
+          <article class="methodology-card">
+            <h3 style="margin-top: 0; color: var(--state-unknown);">3. Five Explicit UNKNOWN Reason Codes</h3>
+            <ul style="padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 0.4rem;">
+              <li><code>INSUFFICIENT_EVIDENCE_SAA_RADIATION</code>: Trapped proton radiation in South Atlantic Anomaly (<code>47</code> windows, <code>18,571 s</code>).</li>
+              <li><code>FATAL_QUALITY_FLAG</code>: Odd-bit fatal instrument/platform/external/processing mask (<code>(flag &amp; 0x55) != 0</code>).</li>
+              <li><code>MISSING_SOURCE_DATA</code>: Nov 11, 2023 NASA QC deleted-orbit gap (<code>5,519.2 s</code>) or post-decommissioning tail (<code>2,795.2 s</code>).</li>
+              <li><code>OUTSIDE_OBSERVATION_COVERAGE</code>: Locations outside the active ~550 km swath or poleward of <code>±54°</code> (<code>98,640</code> unviewed polar cells).</li>
+              <li><code>UNRESOLVED_TIME_MATCH</code>: Fallback code for any timestamp outside validated granule bounds (<code>0</code> unresolved in production).</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <!-- TAB 6: VALIDATION REPORTS READER -->
+      <div id="tab-reports" class="archive-tab-panel" role="tabpanel">
+        <div class="methodology-card">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-3);">
+            <div>
+              <h3 style="margin: 0; color: var(--accent-earth-blue);">In-Page Scientific Validation &amp; Engineering Reports Reader</h3>
+              <p style="margin: 0.2rem 0 0 0; font-size: 0.84rem; color: var(--text-secondary);">
+                Read any Task 2, Task 2.1, Task 3, Task 4, or Task 5 validation report directly inside the observatory or open its raw Markdown file:
+              </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;">
+              <label for="validation-report-select" class="mono" style="font-size: 0.78rem;">Select Report:</label>
+              <select id="validation-report-select" class="select-input" style="width: auto; min-height: 38px;">
+                <option value="/07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md">Task 3 Final Scientific Validation Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/THREE_STATE_VALIDATION_REPORT.md">Three-State Model Validation Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/TAI93_UTC_VALIDATION_REPORT.md">TAI93 to UTC Conversion Validation Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/GRANULE_MATCHING_REPORT.md">106-Granule Pairing Validation Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/VIEWTIME_QUALITY_VALIDATION.md">Viewtime &amp; Quality Flag Bitmask Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/FLASH_HIERARCHY_VALIDATION.md">Flash-Group-Event-Area Hierarchy Report</option>
+                <option value="/05_SCIENTIFIC_VALIDATION/SPATIAL_MATCHING_REPORT.md">Spatial Point-in-Cell Matching Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/PRODUCTION_DATA_GENERATION_REPORT.md">Task 4 Production Data Generation Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/FINAL_THREE_STATE_COUNTS.md">Final Three-State Counts &amp; Sensitivity Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/FLASH_EXCLUSION_REPORT.md">Flash Exclusion Audit Report (1,570 Flashes)</option>
+                <option value="/07_PROJECT_REPORTS/validation/SAA_HANDLING_REPORT.md">Conservative SAA Handling Validation Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/JSON_GEOJSON_VALIDATION_REPORT.md">JSON &amp; GeoJSON Schema Validation Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/TASK_2_1_SCIENTIFIC_AUDIT.md">Task 2.1 Scientific Audit Report</option>
+                <option value="/03_DATA_INSPECTION/complete_variable_dictionary.md">Complete 61-Variable NASA Dictionary</option>
+                <option value="/07_PROJECT_REPORTS/validation/DATA_INTEGRITY_AND_GAPS_REPORT.md">Data Integrity &amp; Nov 11 Gap Report</option>
+                <option value="/07_PROJECT_REPORTS/research/NASA_DATA_INSPECTION_REPORT.md">NASA Data Inspection Report</option>
+                <option value="/07_PROJECT_REPORTS/validation/CONTENT_PRESERVATION_AUDIT.md">Redesign Content Preservation Audit</option>
+                <option value="/02_NASA_DOCUMENTATION/SONIFYEARTH_MASTER_PROJECT_SPECIFICATION.md">Master Project Specification</option>
+              </select>
+              <a id="validation-report-open-link" href="/07_PROJECT_REPORTS/validation/TASK_3_FINAL_SCIENTIFIC_VALIDATION.md" target="_blank" rel="noopener noreferrer" class="btn btn-sm">
+                Open Raw Report ↗
+              </a>
+            </div>
+          </div>
+          <pre id="validation-report-viewer" class="report-reader-pre" aria-live="polite">Select a report above to read its full scientific validation text…</pre>
+        </div>
+      </div>
+
+      <!-- TAB 7: DOWNLOADS & PROVENANCE -->
+      <div id="tab-downloads" class="archive-tab-panel" role="tabpanel">
+        <div class="download-grid">
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-detected">JSON · 14,554 Flashes</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;"><code>flash_events.json</code></h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                All 14,554 confirmed <code>DETECTED</code> lightning flashes with TAI93/UTC times, WGS84 coordinates, radiance, footprint, and NetCDF provenance (16.1 MB).
+              </p>
+            </div>
+            <a href="/06_PROCESSED_DATA/json/flash_events.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-observed">JSON · 4,160,874 Passes</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;"><code>observation_windows.json</code></h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                Global 0.5° × 0.5° observation census, 8,459 traceable grid passes, and 71 boundary-cell flash reconciliations (7.2 MB).
+              </p>
+            </div>
+            <a href="/06_PROCESSED_DATA/json/observation_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Download JSON ↗</a>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-observed">JSON · 106 Granules</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;"><code>source_manifest.json</code> &amp; <code>three_state_data.json</code></h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                Complete 106-pair manifest, DOIs, Decision 3 sensitivity matrix, and 10 sub-second swath-edge benchmark records.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <a href="/06_PROCESSED_DATA/json/source_manifest.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Manifest ↗</a>
+              <a href="/06_PROCESSED_DATA/json/three_state_data.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Three-State ↗</a>
+            </div>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-unknown">JSON · 1,570 Exclusions</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;"><code>excluded_records_audit.json</code> &amp; <code>sonifyearth_windows.json</code></h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                Record-by-record audit of all 1,570 excluded flashes plus 107 orbital windows, 47 SAA windows, 10 fatal windows, and 2,350 swath keyframes.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <a href="/06_PROCESSED_DATA/json/excluded_records_audit.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Exclusions ↗</a>
+              <a href="/06_PROCESSED_DATA/json/sonifyearth_windows.json" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Windows ↗</a>
+            </div>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-detected">GeoJSON · WGS84 Layers</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;">Production GeoJSON FeatureCollections</h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                <code>lightning_events.geojson</code> (14,554 points), <code>observation_grid.geojson</code> (5,532 polygons), and <code>unknown_coverage.geojson</code> (864 features).
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <a href="/06_PROCESSED_DATA/geojson/lightning_events.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Flashes ↗</a>
+              <a href="/06_PROCESSED_DATA/geojson/observation_grid.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Grid ↗</a>
+              <a href="/06_PROCESSED_DATA/geojson/unknown_coverage.geojson" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Unknown ↗</a>
+            </div>
+          </div>
+
+          <div class="download-card">
+            <div>
+              <span class="state-badge state-badge-observed">Official NASA PDFs</span>
+              <h4 style="margin: 0.5rem 0 0.25rem 0;">NASA GHRC DAAC Documentation</h4>
+              <p style="margin: 0; font-size: 0.8rem; color: var(--text-secondary);">
+                Official NASA user guides, ATBD algorithm specification, and ISS LIS anomalies/decommissioning documentation in <code>/02_NASA_DOCUMENTATION/</code>.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <a href="/02_NASA_DOCUMENTATION/science_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Science Guide ↗</a>
+              <a href="/02_NASA_DOCUMENTATION/backgrounds_v2_guide.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">BG Guide ↗</a>
+              <a href="/02_NASA_DOCUMENTATION/lis_algorithm.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">ATBD ↗</a>
+              <a href="/02_NASA_DOCUMENTATION/lis_anomalies.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm">Anomalies ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <div>
+        <strong>SonifyEarth — Silence Isn't Zero.</strong> · An Observation-Aware Lightning Jukebox (NASA Space Apps Challenge 2026 — The Earth Information Jukebox)
+        <div class="mono" style="font-size: 0.76rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Historical NASA ISS LIS V2.2 Archive (2023-11-09 to 2023-11-16) · DOIs: 10.5067/LIS/ISSLIS/DATA111 &amp; DATA211 · SVS 5011 · Not a live lightning feed · Zero original NASA files modified.
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;">
+        <button type="button" id="footer-reduced-motion-btn" class="btn btn-sm" aria-pressed="false">
+          Reduced Motion: <span id="reduced-motion-status-label" class="mono">System Default</span>
+        </button>
+        <a href="#page-landing" class="btn btn-sm">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

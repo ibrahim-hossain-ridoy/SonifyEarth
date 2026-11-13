@@ -1,0 +1,4 @@
+threshold_rule,valid_records_count,excluded_records_count,percent_retained,scientific_assessment
+eff > 0.0 s (Documented Positive Observation),4160874,0,100.0,Retains 100% of NASA-validated viewtime grid cells (min=0.04s=20 frames); prevents artificial swath border truncation.
+eff >= 0.1 s,3803137,357737,91.4024,"Excludes 357,737 edge-clipping cells (8.60%) that had 20-49 valid CCD frames."
+eff >= 1.0 s,3488923,671951,83.8507,"Excludes 671,951 edge cells (16.15%); unnecessarily discards outer ~55km swath edges as UNKNOWN."

@@ -1,0 +1,118 @@
+{
+  "project_name": "SonifyEarth — Silence Isn't Zero",
+  "challenge": "NASA Space Apps Challenge 2026 — The Earth Information Jukebox",
+  "stage": "Task 4: Production Data Engine & Normalized JSON/GeoJSON Generation",
+  "config_version": "1.0.0",
+  "source_datasets": {
+    "science_v2": {
+      "collection_id": "ISS_LIS_SC_V2.2",
+      "data_code": "DATA111",
+      "doi": "10.5067/LIS/ISSLIS/DATA111",
+      "processing_level": "Level 2",
+      "version": "V2.2",
+      "qc_status": "FIN",
+      "directory": "01_NASA_RAW_DATA/science_v2",
+      "expected_file_count": 106
+    },
+    "backgrounds_v2": {
+      "collection_id": "ISS_LIS_BG_V2.2",
+      "data_code": "DATA211",
+      "doi": "10.5067/LIS/ISSLIS/DATA211",
+      "processing_level": "Level 1B",
+      "version": "V2.2",
+      "qc_status": "FIN",
+      "directory": "01_NASA_RAW_DATA/backgrounds_v2",
+      "expected_file_count": 106
+    }
+  },
+  "time_conversion_policy": {
+    "tai93_epoch_utc": "1993-01-01T00:00:00.000000Z",
+    "tai_minus_utc_at_1993_epoch_s": 27.0,
+    "tai_minus_utc_in_nov_2023_s": 37.0,
+    "net_leap_seconds_1993_to_2023_s": 10.0,
+    "formula": "UTC = Epoch(1993-01-01T00:00:00Z) + timedelta(seconds = TAI93 - 10.0)",
+    "max_verified_granule_error_s": 0.0,
+    "preserve_raw_tai93": true
+  },
+  "decision_1_saa_handling_policy": {
+    "policy_name": "Conservative SAA Quality Policy (SonifyEarth Processing Decision)",
+    "authority_note": "Conservative SonifyEarth processing decision restricting SAA reclassification to verified SAA-affected intervals; not claimed as an explicit NASA-mandated application rule.",
+    "source_variable_backgrounds": "bg_info_external_alert",
+    "source_variable_science": "one_second_external_alert",
+    "saa_bitmask_hex": "0x03",
+    "saa_bitmask_int": 3,
+    "bit_definitions": {
+      "bit_1_0x01": "Warning_Satellite_within_SAA_Model1",
+      "bit_2_0x02": "Warning_satellite_within_SAA_Model2"
+    },
+    "affected_observation_interval_state": "UNKNOWN",
+    "affected_observation_reason_code": "INSUFFICIENT_EVIDENCE_SAA_RADIATION",
+    "allow_observed_no_detection_in_saa": false,
+    "exclude_saa_overlapping_flashes_from_detected": true,
+    "excluded_flash_reason_code": "INSUFFICIENT_EVIDENCE_SAA_RADIATION",
+    "scope_restriction": "Restricted strictly to verified 1-second SAA-affected intervals and overlapping viewtime windows, never whole orbital passes."
+  },
+  "decision_2_flash_quality_filtering": {
+    "source_alert_variable": "lightning_flash_alert_flag",
+    "strict_fatal_bitmask_hex": "0x55",
+    "strict_fatal_bitmask_int": 85,
+    "warning_bitmask_hex": "0xAA",
+    "warning_bitmask_int": 170,
+    "fatal_bit_definitions": {
+      "bit_1_0x01": "instrument_fatal_flag",
+      "bit_3_0x04": "platform_fatal_flag",
+      "bit_5_0x10": "external_fatal_flag",
+      "bit_7_0x40": "processing_fatal_flag"
+    },
+    "exclude_class1_framing_toggle_flashes": true,
+    "non_glint_criteria": {
+      "atbd_reference": "NASA LIS ATBD Section 3.4.3.10.2.2 (Glint Filters, pp. 42-43)",
+      "case_2_specular_angle_min_deg": 5.0,
+      "case_2_max_glint_cosine": 0.9961946980917455,
+      "case_1_max_group_rate_per_sec": 250.0,
+      "case_1_min_duration_sec": 0.2
+    },
+    "preserve_excluded_in_audit": true,
+    "radiance_policy": "Preserved strictly as source metadata (uJ/sr/m2/um); never interpreted as storm severity or mapped to audio loudness."
+  },
+  "decision_3_effective_observation_duration": {
+    "source_variable": "viewtime_effective_obs",
+    "fill_value": -9999.0,
+    "baseline_threshold_rule": "viewtime_effective_obs > 0.0",
+    "baseline_threshold_seconds": 0.0,
+    "sensitivity_comparison_thresholds_seconds": [0.0, 0.1, 1.0],
+    "viewtime_fatal_bitmask_hex": "0x55"
+  },
+  "three_state_sound_specification": {
+    "DETECTED": {
+      "sound_cue": "SHORT_PERCUSSIVE_PULSE",
+      "description": "Valid flash record passing strict fatal-bit mask (flag & 0x55 == 0), non-glint criteria, and no disqualifying SAA overlap."
+    },
+    "OBSERVED_NO_DETECTION": {
+      "sound_cue": "SUSTAINED_OBSERVATION_TEXTURE",
+      "description": "Valid positive effective observation interval (viewtime_effective_obs > 0.0s), warning-only alert status (flag & 0x55 == 0), no SAA overlap, and zero confirmed flashes."
+    },
+    "UNKNOWN": {
+      "sound_cue": "DISTINCT_NEUTRAL_TWO_PART_CUE",
+      "description": "Outside orbital swath coverage, NASA QC deleted-orbit gap, contiguous fatal quality interval, SAA radiation uncertainty, or unresolved time match.",
+      "reason_codes": [
+        "OUTSIDE_OBSERVATION_COVERAGE",
+        "MISSING_SOURCE_DATA",
+        "FATAL_QUALITY_FLAG",
+        "INSUFFICIENT_EVIDENCE_SAA_RADIATION",
+        "UNRESOLVED_TIME_MATCH"
+      ]
+    },
+    "listening_modes": [
+      "EVIDENCE_INSPECTOR_MODE",
+      "GLOBAL_ORBITAL_PLAYBACK_MODE"
+    ],
+    "prohibited_mappings": [
+      "radiance_to_loudness_or_storm_intensity",
+      "latitude_to_pitch",
+      "background_radiance_to_ambient_drone",
+      "solar_vector_to_audio_modulation"
+    ]
+  }
+}
+

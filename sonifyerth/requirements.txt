@@ -1,0 +1,31 @@
+# ==============================================================================
+# SonifyEarth - Scientific Environment & Data Processing Requirements
+# NASA Space Apps Challenge 2026
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Scientific Data Inspection, NetCDF-4 & HDF Reading (Phase 1 / Inspection)
+# ------------------------------------------------------------------------------
+netCDF4>=1.6.5         # Direct access to NetCDF-4/HDF5 scientific lightning datasets
+h5py>=3.11.0           # HDF5 file inspection and attribute querying
+xarray>=2024.0.0       # N-dimensional labeled array processing for orbital grids
+numpy>=1.26.0          # High-performance numerical computations
+scipy>=1.13.0          # Scientific computing, signal processing, spatial utilities
+pandas>=2.2.0          # Tabular data manipulation, time-series alignment, and CSV export
+
+# ------------------------------------------------------------------------------
+# 2. Geospatial, Validation & Data Transformation (Phase 2 / Processing)
+# ------------------------------------------------------------------------------
+shapely>=2.0.0         # Planar geometric operations and FOV bounding polygons
+pyproj>=3.6.0          # Cartographic projections and coordinate transformations
+geojson>=3.1.0         # GeoJSON encoding for lightning events, clusters, and viewports
+
+# ------------------------------------------------------------------------------
+# 3. Backend API & Web Services (Phase 3 / Future Implementation)
+# (Do not install until backend implementation stage is approved)
+# ------------------------------------------------------------------------------
+fastapi>=0.110.0       # High-performance asynchronous REST backend API
+uvicorn>=0.28.0        # ASGI server for FastAPI
+pydantic>=2.6.0        # Data validation and typed schemas
+python-multipart>=0.0.9 # Multipart form data parsing for file uploads / queries
+

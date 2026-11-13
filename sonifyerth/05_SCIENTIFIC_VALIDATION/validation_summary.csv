@@ -1,0 +1,8 @@
+validation_gate,items_tested,passed,failed,metric
+1. Time Conversion (TAI93 to UTC),106,106,0,Max error = 0.000000 s (10.0s leap offset)
+2. Granule Matching (Science vs BG),106,106,0,"100% orbit ID, UTC, TAI, 1s cadence match"
+3. Flash Hierarchy (Flash->Group->Event),16124,16124,0,"0 boundary errors, 0 parent mismatches across 549,106 events"
+4. Viewtime Alert Bitmask Audit,4160874,4160874,0,"0 fatal (0x55), 100% valid warning-only (0xAA)"
+5. Flash Alert Flag Audit,16124,16019,105,"16,019 clean; 105 excluded (fatal bit 0x01)"
+6. Spatial Grid Matching (0.5-deg),16124,16102,22,"Exact cell: 15442, 1-deg edge buffer: 660, beyond 1-deg: 22"
+7. Three-State Real Examples,6,6,0,All 3 states + 4 UNKNOWN sub-reasons verified in raw data

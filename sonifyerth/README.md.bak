@@ -1,0 +1,133 @@
+# SonifyEarth — Silence Isn't Zero
+### *An Observation-Aware Lightning Jukebox*
+**NASA Space Apps Challenge 2026 — The Earth Information Jukebox**
+
+[![Status: Task 5 & Redesign Complete](https://img.shields.io/badge/Status-Task%205%20%26%20Redesign%20Complete-success.svg)](#project-status)
+[![NASA Datasets: ISS LIS V2.2](https://img.shields.io/badge/NASA%20Datasets-ISS%20LIS%20V2.2-blue.svg)](#nasa-dataset-sources)
+[![Validation: 13/13 Playwright E2E](https://img.shields.io/badge/Playwright%20E2E-13%2F13%20PASS-brightgreen.svg)](#verification--testing)
+[![Content Preservation: 100% Verified](https://img.shields.io/badge/Content%20Preservation-100%25%20Verified-gold.svg)](07_PROJECT_REPORTS/validation/CONTENT_PRESERVATION_AUDIT.md)
+
+---
+
+## 1. Project Purpose & Central Scientific Question
+
+> **"When a lightning map is quiet, what does that silence actually mean?"**
+
+**SonifyEarth — Silence Isn't Zero** transforms quality-controlled orbital scientific data from the **Lightning Imaging Sensor (LIS)** aboard the **International Space Station (ISS)** into an interactive, scientifically traceable visual and acoustic experience.
+
+Unlike a geostationary satellite, the ISS orbits Earth at ~400 km altitude (`51.6°` inclination), sweeping a narrow **`~550 km × 550 km` optical camera field of view** that observes any given `0.5° × 0.5°` ground cell for only **~80–95 seconds per overpass** within approximately **`±54°` latitude** (`[-55.75°, +55.25°]` empirical bounds). Treating an unobserved or radiation-blinded region as "zero lightning" is like claiming a hallway was empty when the security camera was pointed elsewhere or unplugged.
+
+SonifyEarth resolves this ambiguity through its locked **Three-State Scientific Model** and **Two Listening Modes**:
+
+| Scientific State | Meaning in Validated NASA ISS LIS V2.2 Data | `EVENT-ONLY` Mode | `OBSERVATION-AWARE` Mode |
+|---|---|---|---|
+| **`DETECTED`** | Confirmed lightning flash inside active LIS field of view passing all fatal (`0x55 == 0`), solar-glint, and South Atlantic Anomaly (`0x03 == 0`) quality checks (`14,554` flashes). | **Short Percussive Pulse** (`880 Hz → 440 Hz`, `65 ms`) | **Short Percussive Pulse** (`880 Hz → 440 Hz`, `65 ms`) |
+| **`OBSERVED_NO_DETECTION`** | Active optical surveillance (`viewtime_effective_obs > 0.0 s`) with healthy telemetry (`0x55 == 0`), no SAA overlap, and **0** confirmed flashes (`3,994,260` cell passes). | *Silent (Ambiguous)* | **Sustained Observation Texture** (`220 Hz + 330 Hz` harmonic bed + `360 Hz` band-passed noise) |
+| **`UNKNOWN`** | Outside orbital swath/latitude bounds (`> ±54°`), missing source granules (`Nov 11 185.78-min QC gap`), fatal flag (`4,818s Nov 16 outage`), or SAA proton radiation (`161,468` cell passes). | *Silent (Ambiguous)* | **Distinct Neutral Two-Part Cue** (`528 Hz → 396 Hz` neutral two-part chime) |
+
+---
+
+## 2. Quick Start — Running the Website & Verification Suites
+
+> **Windows Users:** See the dedicated [README_WINDOWS.md](README_WINDOWS.md) or simply double-click `start_server_windows.bat`.
+
+### 1. Start the Local Scientific Web Server
+
+The backend server has **zero third-party dependencies** (Python standard library only).
+
+**On Windows (Command Prompt / PowerShell):**
+```cmd
+python 08_WEBSITE\backend\server.py --port 8080
+```
+*(Or use `py 08_WEBSITE\backend\server.py --port 8080`, or double-click `start_server_windows.bat`)*
+
+**On macOS / Linux:**
+```bash
+python3 08_WEBSITE/backend/server.py --port 8080
+```
+
+Then open `http://127.0.0.1:8080/` (or `http://localhost:8080/`) in your browser. The server provides HTTP/1.1 with `206 Partial Content` byte-range streaming for the NASA SVS 5011 MP4 visualization (`iss_lightning_sphere_07312023.mp4`) and serves all validated production JSON/GeoJSON payloads from `06_PROCESSED_DATA/`.
+
+### 2. Dependencies Summary
+
+- **Web Application & Audio Engine:** Python 3.8+ (Standard library only; **0 pip packages needed**). Audio synthesizes in real time via the browser's Web Audio API.
+- **Optional Scientific Environment (Raw Data Processing):** `pip install -r requirements.txt` (installs `numpy`, `scipy`, `pandas`, `xarray`, `netCDF4`, `h5py`, `shapely`, `pyproj`, `geojson` for processing raw NASA `.nc` and `.hdf` files).
+- **Optional Test Suites (Playwright & ESM Unit Tests):** Node.js 18+; run `npm install` and `npx playwright install chromium`.
+
+### 3. Run the Automated Verification Suites
+```bash
+# 1. Verify workspace & raw NASA file integrity (10 / 10 checks)
+python3 scripts/verify_workspace.py          # Windows: python scripts\verify_workspace.py
+
+# 2. Verify backend HTTP server, /api/health, MIME headers & HTTP 206 byte-range video (6 / 6 checks)
+python3 08_WEBSITE/backend/server.py --self-test
+
+# 3. Verify Task 4 production JSON/GeoJSON mathematical reconciliation (11 / 11 gates)
+python3 04_DATA_PROCESSING/scripts/validate_production_data.py
+
+# 4. Verify Task 3 independent NetCDF-4 reproducibility across all 6 anchor records
+python3 scripts/verify_task3_reproducibility.py
+
+# 5. Run Task 5 Unit & Real Data Integration Suite (9 / 9 suites)
+node scripts/test_task5_unit_and_integration.mjs
+
+# 6. Run Task 5 Playwright E2E & Accessibility Smoke Test Suite (13 / 13 checks)
+node scripts/verify_task5_playwright_e2e.mjs
+```
+
+---
+
+## 3. Workspace Folder Structure
+
+```text
+sonifyerth/
+├── 01_NASA_RAW_DATA/                     # Untouched primary raw NASA datasets (428 files verified)
+│   ├── science_v2/                       # 106 .nc and 106 .hdf ISS LIS Science V2.2 files
+│   ├── backgrounds_v2/                   # 106 .nc and 106 .hdf ISS LIS Backgrounds V2.2 files
+│   └── original_downloads/               # Byte-for-byte archived download folders and PDFs
+├── 02_NASA_DOCUMENTATION/                # Official NASA reference guides & Master Specification
+│   ├── SONIFYEARTH_MASTER_PROJECT_SPECIFICATION.md
+│   ├── science_v2_guide.pdf
+│   ├── backgrounds_v2_guide.pdf
+│   ├── lis_algorithm.pdf
+│   └── lis_anomalies.pdf
+├── 03_DATA_INSPECTION/                   # Task 2 NetCDF-4 variable dictionaries & schema reports
+├── 04_DATA_PROCESSING/                   # Task 4 reproducible extraction & validation scripts
+├── 05_SCIENTIFIC_VALIDATION/             # Task 3 granule matching, TAI93 & 3-state verification
+├── 06_PROCESSED_DATA/                    # Validated website-ready JSON & GeoJSON payloads
+│   ├── json/                             # source_manifest, flash_events, observation_windows, three_state_data, sonifyearth_windows, excluded_records_audit, schema
+│   └── geojson/                          # lightning_events, observation_grid, unknown_coverage
+├── 07_PROJECT_REPORTS/                   # Research, architecture, design system & validation reports
+├── 08_WEBSITE/                           # Complete SonifyEarth scientific web application
+│   ├── backend/server.py                 # HTTP 1.1 server with 206 Partial Content Range support
+│   ├── frontend/                         # index.html, css/styles.css, js/ (app, map, timeline, inspector, adapter)
+│   └── public/favicon.svg                # Accessible brand icon
+├── 09_SOUND_ENGINE/                      # Deterministic Web Audio API synthesis engine
+│   ├── audio_mapping/sound_cue_spec.js   # Locked 3-cue parameters & prohibited mapping guardrails
+│   └── playback/sound_engine.js          # Web Audio API synthesizer & orphan-free node lifecycle
+├── 10_DEVELOPER_HANDOFF/                 # API contracts & production JSON/GeoJSON schemas
+├── scripts/                              # Workspace, data, unit, and Playwright E2E test runners
+├── iss_lightning_sphere_07312023.mp4     # Official NASA SVS 5011 visualization video (127 MB)
+├── Screenshot 2026-11-09 at 08.26.06.png # NASA SVS 5011 preview frame
+├── start_server_windows.bat              # Windows Command Prompt one-click server launcher
+├── start_server_windows.ps1              # Windows PowerShell server launcher
+└── README_WINDOWS.md                     # Dedicated Windows 10/11 setup & startup instructions
+```
+
+---
+
+## 4. NASA Dataset Sources & Citations
+
+1. **NASA QC ISS LIS Science V2.2 (`DATA111`)**
+   - **Collection**: `ISS_LIS_SC_V2.2` | **DOI**: `10.5067/LIS/ISSLIS/DATA111`
+   - **Coverage**: 106 orbital granules (`2023-11-09T22:52:12.400Z` to `2023-11-16T21:17:00.000Z`, final operational week prior to permanent decommissioning)
+   - **Empirical Spatial Footprint**: `[-55.75°, +55.25°]` latitude (`51.6°` orbit inclination + `~550 km × 550 km` swath)
+2. **NASA QC ISS LIS Backgrounds V2.2 (`DATA211`)**
+   - **Collection**: `ISS_LIS_BG_V2.2` | **DOI**: `10.5067/LIS/ISSLIS/DATA211`
+   - **Coverage**: 106 co-registered orbital granules providing `bg_info_external_alert` (`0x03` SAA bitmask), 1-second instrument telemetry, and 4-corner swath footprint geometry.
+3. **NASA SVS 5011 / Earth Information Center Visualization**
+   - **Asset**: `iss_lightning_sphere_07312023.mp4` (Released July 31, 2023; climatological composite Feb 2017 – Mar 2023). Explicitly distinguished in the UI from the interactive 7-day Nov 9–16, 2023 dataset.
+
+---
+
+*SonifyEarth — Silence Isn't Zero. Built for the NASA Space Apps Challenge 2026 (The Earth Information Jukebox).*
